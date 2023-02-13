@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.3.32922.545
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.MapViewer", "ArcanumIsland.MapViewer\ArcanumIsland.MapViewer.csproj", "{BB2644B6-AFDF-4D05-B15E-B050B0AD6D82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.Core", "ArcanumIsland.Core\ArcanumIsland.Core.csproj", "{514659D9-0152-4E63-A691-E1A27FB903CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.Core", "ArcanumIsland.Core\ArcanumIsland.Core.csproj", "{1EBAC4CA-B038-4C12-B2C9-2B34D63FC87C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.MapViewer", "ArcanumIsland.MapViewer\ArcanumIsland.MapViewer.csproj", "{CE3AE760-9611-46B4-9D25-C42A10FF9C07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MathSupport", "MathSupport", "{3632F9C8-AE94-433D-985E-7D783C4755B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerlinNoise", "PerlinNoise\PerlinNoise.csproj", "{641C75F3-2E03-4776-B867-1AA53597D1CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +17,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB2644B6-AFDF-4D05-B15E-B050B0AD6D82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB2644B6-AFDF-4D05-B15E-B050B0AD6D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB2644B6-AFDF-4D05-B15E-B050B0AD6D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB2644B6-AFDF-4D05-B15E-B050B0AD6D82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EBAC4CA-B038-4C12-B2C9-2B34D63FC87C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EBAC4CA-B038-4C12-B2C9-2B34D63FC87C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EBAC4CA-B038-4C12-B2C9-2B34D63FC87C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EBAC4CA-B038-4C12-B2C9-2B34D63FC87C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{514659D9-0152-4E63-A691-E1A27FB903CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514659D9-0152-4E63-A691-E1A27FB903CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514659D9-0152-4E63-A691-E1A27FB903CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514659D9-0152-4E63-A691-E1A27FB903CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE3AE760-9611-46B4-9D25-C42A10FF9C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE3AE760-9611-46B4-9D25-C42A10FF9C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE3AE760-9611-46B4-9D25-C42A10FF9C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE3AE760-9611-46B4-9D25-C42A10FF9C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{641C75F3-2E03-4776-B867-1AA53597D1CE} = {3632F9C8-AE94-433D-985E-7D783C4755B3}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {139E1D89-1E19-490F-B575-1B5AA94A0A6E}
+		SolutionGuid = {7F2D484B-47C6-40AD-A926-E66416DC2A12}
 	EndGlobalSection
 EndGlobal
