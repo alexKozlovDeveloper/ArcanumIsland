@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.Core", "ArcanumIsland.Core\ArcanumIsland.Core.csproj", "{514659D9-0152-4E63-A691-E1A27FB903CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArcanumIsland.Core", "ArcanumIsland.Core\ArcanumIsland.Core.csproj", "{514659D9-0152-4E63-A691-E1A27FB903CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.MapViewer", "ArcanumIsland.MapViewer\ArcanumIsland.MapViewer.csproj", "{CE3AE760-9611-46B4-9D25-C42A10FF9C07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArcanumIsland.MapViewer", "ArcanumIsland.MapViewer\ArcanumIsland.MapViewer.csproj", "{CE3AE760-9611-46B4-9D25-C42A10FF9C07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MathSupport", "MathSupport", "{3632F9C8-AE94-433D-985E-7D783C4755B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerlinNoise", "PerlinNoise\PerlinNoise.csproj", "{641C75F3-2E03-4776-B867-1AA53597D1CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerlinNoise", "PerlinNoise\PerlinNoise.csproj", "{641C75F3-2E03-4776-B867-1AA53597D1CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.ConsoleApp", "ArcanumIsland.ConsoleApp\ArcanumIsland.ConsoleApp.csproj", "{AE5429D3-8FE7-4C25-93D9-A134088FC2B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{641C75F3-2E03-4776-B867-1AA53597D1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5429D3-8FE7-4C25-93D9-A134088FC2B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5429D3-8FE7-4C25-93D9-A134088FC2B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5429D3-8FE7-4C25-93D9-A134088FC2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5429D3-8FE7-4C25-93D9-A134088FC2B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
