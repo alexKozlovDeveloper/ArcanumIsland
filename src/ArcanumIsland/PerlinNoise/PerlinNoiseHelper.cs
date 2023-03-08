@@ -272,6 +272,56 @@ namespace PerlinNoise
             return val != 0 && (val & (val - 1)) == 0;
         }
 
+        public static void GetIntegerAndFractionalPart(double num, out int integer, out double fractional) 
+        {
+            integer = (int)num;
+            fractional = num - (double)integer;
+        }
+
+        public static int[][] ResizeMatrix(this int[][] matrix, int newWidth, int newHeight) 
+        {
+            var d1 = GetTransitionValue(1.0, 4.0, 0.01);
+            var d2 = GetTransitionValue(1.0, 4.0, 0.5);
+            var d3 = GetTransitionValue(1.0, 4.0, 0.75);
+
+            var d4 = GetTransitionValue(4.0, 1.0, 0.25);
+            var d5 = GetTransitionValue(4.0, 1.0, 0.5);
+            var d6 = GetTransitionValue(4.0, 1.0, 0.75);
+
+            int width = matrix.Length;
+            int height = matrix[0].Length;
+
+            double widthStepSize = (double)width / (double)newWidth;
+            double heightStepSize = (double)height / (double)newHeight;
+
+            var newMatrix = CreateEmptyMatrix(newWidth, newHeight);
+
+            return newMatrix;
+        }
+
+        public static double GetTransitionValue(double a, double b, double percent) 
+        {
+            var difference = b - a;
+
+            var step = difference * percent;
+
+            var result = a + step;
+
+            return result;
+        }
+
+        public static int[][] CreateEmptyMatrix(int newWidth, int newHeight) 
+        {
+            var result = new int[newWidth][];
+
+            for (int x = 0; x < newWidth; x++)
+            {
+                result[x] = new int[newHeight];
+            }
+
+            return result;
+        }
+
         public static int[][] StretchOnMaximumAndMinimumValue(this int[][] matrix, int newMin, int newMax)
         {
             var maxValue = matrix.Max(a => a.Max());
