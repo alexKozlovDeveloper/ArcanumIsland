@@ -272,21 +272,23 @@ namespace PerlinNoise
             return val != 0 && (val & (val - 1)) == 0;
         }
 
-        public static void GetIntegerAndFractionalPart(double num, out int integer, out double fractional) 
+        public static void GetIntegerAndFractionalPart(double num, out int integer, out double fractional)
         {
             integer = (int)num;
             fractional = num - (double)integer;
         }
 
-        public static int[][] ResizeMatrix(this int[][] matrix, int newWidth, int newHeight) 
+        public static double[][] ResizeMatrix(this int[][] matrix, int newWidth, int newHeight)
         {
-            var d1 = GetTransitionValue(1.0, 4.0, 0.01);
-            var d2 = GetTransitionValue(1.0, 4.0, 0.5);
-            var d3 = GetTransitionValue(1.0, 4.0, 0.75);
+            //var d1 = GetSquareTransitionValue(1.0, 2.0, 2.0, 10.0, 0.999, 0.999);
+            //var d2 = GetSquareTransitionValue(1.0, 1.0, 1.0, 1.0, 0.999, 0.999);
+            //var d3 = GetSquareTransitionValue(10.0, 2.0, 2.0, 10.0, 0.5, 0.5);
+            //var d4 = GetSquareTransitionValue(1.0, 2.0, 2.0, 10.0, 0.5, 0.5);
 
-            var d4 = GetTransitionValue(4.0, 1.0, 0.25);
-            var d5 = GetTransitionValue(4.0, 1.0, 0.5);
-            var d6 = GetTransitionValue(4.0, 1.0, 0.75);
+            //var d5 = GetSquareTransitionValue(3.0, 4.0, 5.0, 6.0, 0, 0);
+            //var d6 = GetSquareTransitionValue(3.0, 4.0, 5.0, 6.0, 1, 0);
+            //var d7 = GetSquareTransitionValue(3.0, 4.0, 5.0, 6.0, 0, 1);
+            //var d8 = GetSquareTransitionValue(3.0, 4.0, 5.0, 6.0, 1, 1);
 
             int width = matrix.Length;
             int height = matrix[0].Length;
@@ -296,10 +298,63 @@ namespace PerlinNoise
 
             var newMatrix = CreateEmptyMatrix(newWidth, newHeight);
 
+            for (int newX = 0; newX < newWidth; newX++)
+            {
+                var oldX = newX * widthStepSize;
+
+                for (int newY = 0; newY < newHeight; newY++)
+                {
+                    var oldY = newY * heightStepSize;
+
+                    GetIntegerAndFractionalPart(oldX, out int stepBaseX, out double percentX);
+                    GetIntegerAndFractionalPart(oldY, out int stepBaseY, out double percentY);
+
+                    var increasedStepBaseX = stepBaseX < width - 1 ? stepBaseX + 1 : 0;
+                    var increasedStepBaseY = stepBaseY < height - 1 ? stepBaseY + 1 : 0;
+
+                    var a1 = matrix[stepBaseX][stepBaseY];
+                    var a2 = matrix[increasedStepBaseX][stepBaseY];
+                    var b1 = matrix[stepBaseX][increasedStepBaseY];
+                    var b2 = matrix[increasedStepBaseX][increasedStepBaseY];
+
+                    var value = GetSquareTransitionValue(a1, a2, b1, b2, percentX, percentY);
+
+                    newMatrix[newX][newY] = value;
+                }
+            }
+
+            //for (double oldX = 0, newX = 0; oldX < width; oldX++, newX += widthStepSize)
+            //{
+            //    for (double oldY = 0, newY = 0; oldY < height; oldY++, newY += heightStepSize)
+            //    {
+            //        GetIntegerAndFractionalPart(newX, out int stepBaseX, out double percentX);
+            //        GetIntegerAndFractionalPart(newY, out int stepBaseY, out double percentY);
+
+            //        var a1 = matrix[stepBaseX][stepBaseY];
+            //        var a2 = matrix[stepBaseX + 1][stepBaseY];
+            //        var b1 = matrix[stepBaseX][stepBaseY + 1];
+            //        var b2 = matrix[stepBaseX + 1][stepBaseY + 1];
+
+            //        // var 
+            //    }
+            //}
+
+            //for (double i = 0, j = 0; i <= width; i += widthStepSize, j++)
+            //{
+            //    GetIntegerAndFractionalPart(i, out int stepBase, out double percent);
+
+            //    var a = matrix[stepBase][0];
+            //    var b = matrix[stepBase + 1][0];
+
+            //    var val = GetLinearTransitionValue(a, b, percent);
+
+            //    newMatrix[(int)j][0] = (int)val;
+            //}
+
             return newMatrix;
         }
 
-        public static double GetTransitionValue(double a, double b, double percent) 
+        public static double GetLinearTransitionValue(double a, double b, double percent)
         {
             var difference = b - a;
 
@@ -310,13 +365,73 @@ namespace PerlinNoise
             return result;
         }
 
-        public static int[][] CreateEmptyMatrix(int newWidth, int newHeight) 
+        public static double GetSquareTransitionValue(double a1, double a2, double b1, double b2, double xPercent, double yPercent)
         {
-            var result = new int[newWidth][];
+            var r = Math.Sqrt(2);
+
+            var a1Impact = r - Math.Sqrt(Math.Pow(xPercent, 2) + Math.Pow(yPercent, 2));
+            var a2Impact = r - Math.Sqrt(Math.Pow(1 - xPercent, 2) + Math.Pow(yPercent, 2));
+            var b1Impact = r - Math.Sqrt(Math.Pow(xPercent, 2) + Math.Pow(1 - yPercent, 2));
+            var b2Impact = r - Math.Sqrt(Math.Pow(1 - xPercent, 2) + Math.Pow(1 - yPercent, 2));
+
+            //var d = (a1 * (1 - a1Impact) + a2 * (1 - a2Impact) + b1 * (1 - b1Impact) + b2 * (1 - b2Impact)) 
+            //    / ((1 - a1Impact) + (1 - a2Impact) + (1 - b1Impact) + (1 - b2Impact));
+
+            //var gg = GetWeightedArithmeticMean(new[] { (3.0, 0.5), (4.0, 1.0), (5.0, 1.5) });
+
+            //var sum = a1Impact + a2Impact + b1Impact + b2Impact;
+
+            //var a1ImpactPercent = a1Impact / sum;
+            //var a2ImpactPercent = a2Impact / sum;
+            //var b1ImpactPercent = b1Impact / sum;
+            //var b2ImpactPercent = b2Impact / sum;
+
+
+            var d = new[] { (a1, a1Impact), (a2, a2Impact), (b1, b1Impact), (b2, b2Impact) };
+
+            var result = GetWeightedArithmeticMean(d);
+
+
+            //var impactSum = a1ImpactPercent + a2ImpactPercent + b1ImpactPercent + b2ImpactPercent;
+
+            //var a1Percent = a1 - a1 * (a1ImpactPercent - 0.5);
+            //var a2Percent = a2 - a2 * (a2ImpactPercent - 0.5);
+            //var b1Percent = b1 - b1 * (b1ImpactPercent - 0.5);
+            //var b2Percent = b2 - b2 * (b2ImpactPercent - 0.5);
+
+            //var d222 = (a1Percent + a2Percent + b1Percent + b2Percent) / 4;
+
+            //var a1NormalizedImpactPercent = a1ImpactPercent / impactSum;
+            //var a2NormalizedImpactPercent = a2ImpactPercent / impactSum;
+            //var b1NormalizedImpactPercent = b1ImpactPercent / impactSum;
+            //var b2NormalizedImpactPercent = b2ImpactPercent / impactSum;
+
+            //var d1 = a1ImpactPercent + a2ImpactPercent + b1ImpactPercent + b2ImpactPercent;
+            //var d2 = a1NormalizedImpactPercent + a2NormalizedImpactPercent + b1NormalizedImpactPercent + b2NormalizedImpactPercent;
+
+            //var result = a1 * a1NormalizedImpactPercent + a2 * a2NormalizedImpactPercent + b1 * b1NormalizedImpactPercent + b2 * b2NormalizedImpactPercent;
+
+            return result;
+        }
+
+        public static double GetWeightedArithmeticMean(IEnumerable<(double value, double weight)> items)
+        {
+            var weightSum = items.Select(a => a.weight).Sum();
+
+            var multiplyingValuesAndWeights = items.Select(a => a.value * a.weight).Sum();
+
+            var result = multiplyingValuesAndWeights / weightSum;
+
+            return result;
+        }
+
+        public static double[][] CreateEmptyMatrix(int newWidth, int newHeight)
+        {
+            var result = new double[newWidth][];
 
             for (int x = 0; x < newWidth; x++)
             {
-                result[x] = new int[newHeight];
+                result[x] = new double[newHeight];
             }
 
             return result;
