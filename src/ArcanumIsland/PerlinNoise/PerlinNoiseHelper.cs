@@ -296,7 +296,7 @@ namespace PerlinNoise
             double widthStepSize = (double)width / (double)newWidth;
             double heightStepSize = (double)height / (double)newHeight;
 
-            var newMatrix = CreateEmptyMatrix(newWidth, newHeight);
+            var newMatrix = CreateEmptyDoubleMatrix(newWidth, newHeight);
 
             for (int newX = 0; newX < newWidth; newX++)
             {
@@ -425,13 +425,43 @@ namespace PerlinNoise
             return result;
         }
 
-        public static double[][] CreateEmptyMatrix(int newWidth, int newHeight)
+        public static int[][] Convert(double[][] matrix) 
+        {
+            int width = matrix.Length;
+            int height = matrix[0].Length;
+
+            var result = CreateEmptyIntMatrix(width, height);
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    result[i][j] = (int)matrix[i][j];
+                }
+            }
+
+            return result;
+        }
+
+        public static double[][] CreateEmptyDoubleMatrix(int newWidth, int newHeight)
         {
             var result = new double[newWidth][];
 
             for (int x = 0; x < newWidth; x++)
             {
                 result[x] = new double[newHeight];
+            }
+
+            return result;
+        }
+
+        public static int[][] CreateEmptyIntMatrix(int newWidth, int newHeight)
+        {
+            var result = new int[newWidth][];
+
+            for (int x = 0; x < newWidth; x++)
+            {
+                result[x] = new int[newHeight];
             }
 
             return result;
