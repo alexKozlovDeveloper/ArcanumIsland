@@ -39,6 +39,16 @@ namespace ArcanumIsland.MapViewer
 
             var matrix = generator.GetPerlinNoiseMatrix(resX, 4);
 
+            var newRexX = 500;
+            var newRexY = 300;
+
+
+
+            AddImageToBitmap(resX, resY, matrix);
+        }
+
+        private void AddImageToBitmap(int resX, int resY, int[][] matrix) 
+        {
             WriteableBitmap writableImg = new WriteableBitmap(resX, resY, 96, 96, PixelFormats.Bgr32, null);
 
             //lock the buffer

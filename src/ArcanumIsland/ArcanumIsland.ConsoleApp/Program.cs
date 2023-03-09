@@ -3,6 +3,7 @@ using ArcanumIsland.Core;
 using ArcanumIsland.Core.Logging;
 using ArcanumIsland.Core.MapGeneration;
 using ArcanumIsland.Core.MapGeneration.Steps;
+using PerlinNoise;
 
 namespace ArcanumIsland.ConsoleApp
 {
@@ -14,11 +15,17 @@ namespace ArcanumIsland.ConsoleApp
 
             logger.Info("ArcanumIsland.ConsoleApp: Starting...");
 
-            var mapCreator = new MapCreator();
+            var perlin = new PerlinNoiseGenerator();
 
-            mapCreator.CreateMap();
+            var matrix1 = perlin.GetPerlinNoiseMatrix(16, 3);
 
-            var stepResult = mapCreator.ProcessStep(new AltitudeStep());
+            var matrix2 = matrix1.ResizeMatrix(20, 20);
+
+            //var mapCreator = new MapCreator();
+
+            //mapCreator.CreateMap();
+
+            //var stepResult = mapCreator.ProcessStep(new AltitudeStep());
 
             logger.Info("ArcanumIsland.ConsoleApp: Ending...");
         }

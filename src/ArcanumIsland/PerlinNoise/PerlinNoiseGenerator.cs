@@ -12,7 +12,7 @@ namespace PerlinNoise
 
         private readonly int _maxValue;
 
-        public PerlinNoiseGenerator(int seed, int maxValue)
+        public PerlinNoiseGenerator(int seed = -1, int maxValue = 255)
         {
             _random = new Random(seed);
 
