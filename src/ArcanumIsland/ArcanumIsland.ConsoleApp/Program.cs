@@ -5,6 +5,7 @@ using ArcanumIsland.Core;
 using ArcanumIsland.Core.Logging;
 using ArcanumIsland.Core.MapGeneration;
 using ArcanumIsland.Core.MapGeneration.Steps;
+using MathBase.Points;
 using PerlinNoise;
 
 namespace ArcanumIsland.ConsoleApp
@@ -16,6 +17,13 @@ namespace ArcanumIsland.ConsoleApp
             var logger = new Logger();
 
             logger.Info("ArcanumIsland.ConsoleApp: Starting...");
+
+            //var d1 = Vector2Extensions.BringValueToRange(10, 10);
+            //var d2 = Vector2Extensions.BringValueToRange(-1, 10);
+            //var d3 = Vector2Extensions.BringValueToRange(0, 10);
+            //var d4 = Vector2Extensions.BringValueToRange(9, 10);
+            //var d5 = Vector2Extensions.BringValueToRange(5, 10);
+
 
             var perlin = new PerlinNoiseGenerator();
 

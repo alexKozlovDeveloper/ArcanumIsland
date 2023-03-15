@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathBase
+namespace MathBase.MultidimensionalArrays
 {
     public static class MatrixExtensions
     {
@@ -18,7 +18,7 @@ namespace MathBase
         public static int GetHeight<T>(this T[][] src)
         {
             var height = src.Select(a => a.Length).Max();
-            
+
             return height;
         }
 
