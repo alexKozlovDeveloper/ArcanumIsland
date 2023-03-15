@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathBase.Points;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,5 +74,46 @@ namespace MathBase.MultidimensionalArrays
 
             return result;
         }
+
+        public static bool IsOutOfMatrix<T>(this Matrix<T> matrix, Vector2 point)
+        {
+            if (point.X >= 0 && point.X < matrix.Width)
+            {
+                if (point.Y >= 0 && point.Y < matrix.Height)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        #region Get Immediate Points
+        public static IEnumerable<Vector2> GetImmediatePoints<T>(this Matrix<T> matrix, Vector2 point)
+        {
+            return Constants.ImmediatePointOffsets
+                .Select(a => point.NewRelativePoint(a.x, a.y))
+                .Where(a => matrix.IsOutOfMatrix(a) == false);
+        }
+
+        public static IEnumerable<Vector2> GetFullImmediatePoints<T>(this Matrix<T> matrix, Vector2 point)
+        {
+            return Constants.FullImmediatePointOffsets
+                .Select(a => point.NewRelativePoint(a.x, a.y))
+                .Where(a => matrix.IsOutOfMatrix(a) == false);
+        }
+
+        public static IEnumerable<Vector2> GetImmediatePointsMirror<T>(this Matrix<T> matrix, Vector2 point)
+        {
+            return Constants.ImmediatePointOffsets
+                .Select(a => point.NewRelativePointMirror(a.x, a.y, matrix.Width, matrix.Height));
+        }
+
+        public static IEnumerable<Vector2> GetFullImmediatePointsMirror<T>(this Matrix<T> matrix, Vector2 point)
+        {
+            return Constants.FullImmediatePointOffsets
+                .Select(a => point.NewRelativePointMirror(a.x, a.y, matrix.Width, matrix.Height));
+        }
+        #endregion
     }
 }
