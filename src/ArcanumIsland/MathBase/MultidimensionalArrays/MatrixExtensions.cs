@@ -77,42 +77,28 @@ namespace MathBase.MultidimensionalArrays
 
         public static bool IsOutOfMatrix<T>(this Matrix<T> matrix, Vector2 point)
         {
-            if (point.X >= 0 && point.X < matrix.Width)
-            {
-                if (point.Y >= 0 && point.Y < matrix.Height)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return MatrixHelper.IsOutOfMatrix(matrix.Width, matrix.Height, point);
         }
 
         #region Get Immediate Points
         public static IEnumerable<Vector2> GetImmediatePoints<T>(this Matrix<T> matrix, Vector2 point)
         {
-            return Constants.ImmediatePointOffsets
-                .Select(a => point.NewRelativePoint(a.x, a.y))
-                .Where(a => matrix.IsOutOfMatrix(a) == false);
+            return MatrixHelper.GetImmediatePoints(matrix.Width, matrix.Height, point);
         }
 
         public static IEnumerable<Vector2> GetFullImmediatePoints<T>(this Matrix<T> matrix, Vector2 point)
         {
-            return Constants.FullImmediatePointOffsets
-                .Select(a => point.NewRelativePoint(a.x, a.y))
-                .Where(a => matrix.IsOutOfMatrix(a) == false);
+            return MatrixHelper.GetFullImmediatePoints(matrix.Width, matrix.Height, point);
         }
 
         public static IEnumerable<Vector2> GetImmediatePointsMirror<T>(this Matrix<T> matrix, Vector2 point)
         {
-            return Constants.ImmediatePointOffsets
-                .Select(a => point.NewRelativePointMirror(a.x, a.y, matrix.Width, matrix.Height));
+            return MatrixHelper.GetImmediatePointsMirror(matrix.Width, matrix.Height, point);
         }
 
         public static IEnumerable<Vector2> GetFullImmediatePointsMirror<T>(this Matrix<T> matrix, Vector2 point)
         {
-            return Constants.FullImmediatePointOffsets
-                .Select(a => point.NewRelativePointMirror(a.x, a.y, matrix.Width, matrix.Height));
+            return MatrixHelper.GetFullImmediatePointsMirror(matrix.Width, matrix.Height, point);
         }
         #endregion
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MathBase.Ranges
 {
-    public static class RangeExtensions
+    public static class RangeHelper
     {
         public static int BringValueToRange(int val, int width)
         {

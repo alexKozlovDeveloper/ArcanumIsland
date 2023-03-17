@@ -19,8 +19,8 @@ namespace MathBase.Points
             var newX = point.X + relativeX;
             var newY = point.Y + relativeY;
 
-            newX = RangeExtensions.BringValueToRange(newX, width);
-            newY = RangeExtensions.BringValueToRange(newY, height);
+            newX = RangeHelper.BringValueToRange(newX, width);
+            newY = RangeHelper.BringValueToRange(newY, height);
 
             return new Vector2(newX, newY);
         }

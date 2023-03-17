@@ -8,6 +8,19 @@ namespace MathBase
 {
     public static class Constants
     {
+        /// <summary>
+        /// 
+        ///  a[x][y]
+        ///  
+        ///       x++ ->
+        ///        
+        /// y++   a[-1][-1]  a[0][-1]  a[1][-1] 
+        ///  |
+        ///  V    a[-1][0]   a[0][0]   a[1][0]
+        ///  
+        ///       a[-1][1]   a[0][1]   a[1][1]
+        ///       
+        /// </summary>
         public static IEnumerable<(int x, int y)> ImmediatePointOffsets 
         { 
             get

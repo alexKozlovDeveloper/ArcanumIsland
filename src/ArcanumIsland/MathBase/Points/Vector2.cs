@@ -21,5 +21,10 @@ namespace MathBase.Points
         {
             return $"{X}:{Y}".GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"[{X}:{Y}]";
+        }
     }
 }
