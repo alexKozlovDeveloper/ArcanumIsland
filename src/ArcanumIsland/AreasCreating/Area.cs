@@ -15,7 +15,7 @@ namespace AreasCreating
         public Vector2 Center { get; private set; }
 
         public List<Vector2> AreaPoints { get; private set; }
-        public List<Vector2> ImmediatePoints { get; private set; }
+        public List<Vector2> ImmediatePoints { get; set; }
 
         private int _width;
         private int _height;

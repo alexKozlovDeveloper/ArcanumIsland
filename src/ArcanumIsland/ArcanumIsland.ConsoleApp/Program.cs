@@ -20,18 +20,34 @@ namespace ArcanumIsland.ConsoleApp
 
             logger.Info("ArcanumIsland.ConsoleApp: Starting...");
 
-            var areasCreator = new AreasCreator(100,100);
+            var areasCreator = new AreasCreator(250, 250);
 
-            areasCreator.CreateAreas(6, 6);
+            areasCreator.CreateAreas(10, 10);
             areasCreator.FillAreas();
             var matrix = areasCreator.GetMatrix().GetAsArray();
+
+            var movedMatrix = areasCreator.MoveAreas(10).GetAsArray();
+
+            var c = movedMatrix.Convert(a => 
+            {
+                if (string.IsNullOrEmpty(a)) { return 0; }
+
+                var parts = a.Split('-');
+                return parts.Length;
+            });
 
             var d = matrix.Convert(a => int.Parse(a.Replace("area_", "")));
 
             var d1 = d.StretchOnMaximumAndMinimumValue(0, 250);
-            var d2 = d1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var img = GetImage(d2);
+            //var d2 = d1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
+            var img = GetImage(d1);
             img.Save($"areas_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+
+            var c1 = c.StretchOnMaximumAndMinimumValue(0, 250);
+            //var c2 = c1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
+            var cimg = GetImage(c1);
+            cimg.Save($"areasMoved_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             //var d1 = Vector2Extensions.BringValueToRange(10, 10);
             //var d2 = Vector2Extensions.BringValueToRange(-1, 10);
             //var d3 = Vector2Extensions.BringValueToRange(0, 10);

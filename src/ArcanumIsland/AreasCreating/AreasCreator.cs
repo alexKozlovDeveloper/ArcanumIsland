@@ -95,7 +95,7 @@ namespace AreasCreating
             //    }
             //}
 
-            var d = 0;
+            //var d = 0;
 
             do
             {
@@ -114,13 +114,36 @@ namespace AreasCreating
                         newPoint = area.GetRandomImmediatePoint();
                     }
 
+                    //if (newPoint.ToString() == "[7:46]") 
+                    //{
+                    //    var f = new Vector2(7, 46);
+
+                    //    var f1 = area.ImmediatePoints.Contains(newPoint);
+                    //    var f2 = area.ImmediatePoints.Contains(f);
+                    //    var f3 = f == newPoint;
+                    //}
+
+                    //if (area.AreaPoints.Contains(newPoint)) 
+                    //{
+                    
+                    //}
+
+                    //var str = _matrix[newPoint];
+
                     area.AreaPoints.Add(newPoint);
-                    area.ImmediatePoints.Remove(newPoint);
+                    area.ImmediatePoints.RemoveAll(a => a.Equals(newPoint));//  (newPoint);
 
                     _matrix[newPoint] = area.Name;
-                    d++;
+                    //d++;
 
                     area.ImmediatePoints.AddRange(GetImmediateFreePoints(newPoint));
+
+                    //if (area.ImmediatePoints.Contains(new Vector2(7, 46)) && area.Name == "area_0") 
+                    //{
+                    
+                    //}
+
+                    //area.ImmediatePoints = area.ImmediatePoints.Distinct().ToList();
 
                     foreach (var item in _areas)
                     {
@@ -133,7 +156,46 @@ namespace AreasCreating
             }
             while (_areas.Where(a => a.ImmediatePoints.Count > 0).Count() > 0);
 
-            Console.WriteLine($"d:{d}");
+            //Console.WriteLine($"d:{d}");
+        }
+
+        public Matrix<string> MoveAreas(int distance) 
+        {
+            var resultMatrix = new Matrix<string>(Width, Height);
+
+            foreach (var area in _areas) 
+            {
+                var x = _random.Next(distance * 2) - distance;
+                var y = _random.Next(distance * 2) - distance;
+
+                var motionVector = new Vector2(x, y);
+
+                foreach (var point in area.AreaPoints)
+                {
+                    var newPoint = point.NewRelativePointMirror(motionVector, Width, Height);
+
+                    if (resultMatrix.IsOutOfMatrix(newPoint) == false)
+                    {
+                        var str = resultMatrix[newPoint];
+
+                        if (string.IsNullOrEmpty(str) == false) 
+                        {
+                            if (str.Contains(area.Name))
+                            {
+
+                            }
+                        }
+
+                        resultMatrix[newPoint] += $"{area.Name}-";
+                    }
+                    else 
+                    {
+                    
+                    }
+                }
+            }
+
+            return resultMatrix;
         }
 
         public Matrix<string> GetMatrix() 
