@@ -205,7 +205,7 @@ namespace AreasCreating
 
         public IEnumerable<Vector2> GetImmediateFreePoints(Vector2 point) 
         {
-            var immediatePoints = _matrix.GetImmediatePoints(point);
+            var immediatePoints = _matrix.GetImmediatePointsMirror(point);
 
             var result = immediatePoints.Where(a => string.IsNullOrEmpty(_matrix[a]));
 
