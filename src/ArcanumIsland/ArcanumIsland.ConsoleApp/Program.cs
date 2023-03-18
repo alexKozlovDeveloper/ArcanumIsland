@@ -22,11 +22,11 @@ namespace ArcanumIsland.ConsoleApp
 
             var areasCreator = new AreasCreator(250, 250);
 
-            areasCreator.CreateAreas(10, 10);
+            areasCreator.CreateAreas(5, 5);
             areasCreator.FillAreas();
             var matrix = areasCreator.GetMatrix().GetAsArray();
 
-            var movedMatrix = areasCreator.MoveAreas(10).GetAsArray();
+            var movedMatrix = areasCreator.MoveAreas(25).GetAsArray();
 
             var c = movedMatrix.Convert(a => 
             {
@@ -48,6 +48,13 @@ namespace ArcanumIsland.ConsoleApp
             //var c2 = c1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
             var cimg = GetImage(c1);
             cimg.Save($"areasMoved_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+
+            var smth = c1.Smoothing(13);
+
+            var smthimg = GetImage(smth);
+            smthimg.Save($"areasMovedSmoothing_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
             //var d1 = Vector2Extensions.BringValueToRange(10, 10);
             //var d2 = Vector2Extensions.BringValueToRange(-1, 10);
             //var d3 = Vector2Extensions.BringValueToRange(0, 10);
