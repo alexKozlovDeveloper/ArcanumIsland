@@ -34,7 +34,7 @@ namespace ArcanumIsland.ConsoleApp
             img1.Save($"perlinOrig_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             img2.Save($"radiant_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
-            return;
+            //return;
 
             var areasCreator = new AreasCreator(random, 250, 250);
 

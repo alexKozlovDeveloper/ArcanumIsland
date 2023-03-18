@@ -7,21 +7,9 @@ using System.Threading.Tasks;
 
 namespace MathBase.MultidimensionalArrays
 {
-    public static class MatrixHelper
+    public static class D2ArraysHelper
     {
-        public static T[][] CreateEmptyMatrix<T>(int width, int height)
-        {
-            var result = new T[width][];
-
-            for (int x = 0; x < width; x++)
-            {
-                result[x] = new T[height];
-            }
-
-            return result;
-        }
-
-        public static bool IsOutOfMatrix(int width, int height, Vector2 point)
+        public static bool IsOutOf2dArray(int width, int height, Vector2 point)
         {
             if (point.X >= 0 && point.X < width)
             {
@@ -39,14 +27,14 @@ namespace MathBase.MultidimensionalArrays
         {
             return Constants.ImmediatePointOffsets
                 .Select(a => point.NewRelativePoint(a.x, a.y))
-                .Where(a => IsOutOfMatrix(width, height, a) == false);
+                .Where(a => IsOutOf2dArray(width, height, a) == false);
         }
 
         public static IEnumerable<Vector2> GetFullImmediatePoints(int width, int height, Vector2 point)
         {
             return Constants.FullImmediatePointOffsets
                 .Select(a => point.NewRelativePoint(a.x, a.y))
-                .Where(a => IsOutOfMatrix(width, height, a) == false);
+                .Where(a => IsOutOf2dArray(width, height, a) == false);
         }
 
         public static IEnumerable<Vector2> GetImmediatePointsMirror(int width, int height, Vector2 point)
@@ -60,8 +48,6 @@ namespace MathBase.MultidimensionalArrays
             return Constants.FullImmediatePointOffsets
                 .Select(a => point.NewRelativePointMirror(a.x, a.y, width, height));
         }
-        #endregion
-
-        
+        #endregion        
     }
 }

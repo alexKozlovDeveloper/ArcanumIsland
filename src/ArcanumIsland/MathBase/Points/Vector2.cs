@@ -11,6 +11,11 @@
             Y = y;
         }
 
+        public override string ToString()
+        {
+            return $"[{X}:{Y}]";
+        }
+
         public override int GetHashCode()
         {
             return this.ToString().GetHashCode();
@@ -26,11 +31,6 @@
             }
 
             return false;
-        }
-
-        public override string ToString()
-        {
-            return $"[{X}:{Y}]";
         }
     }
 }

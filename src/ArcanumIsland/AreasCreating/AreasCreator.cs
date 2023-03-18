@@ -1,4 +1,5 @@
-﻿using MathBase.MultidimensionalArrays;
+﻿using MathBase.Matrixes;
+using MathBase.MultidimensionalArrays;
 using MathBase.Points;
 using System;
 using System.Collections.Generic;

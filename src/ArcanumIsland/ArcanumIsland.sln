@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArcanumIsland.ConsoleApp", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AreasCreating", "AreasCreating\AreasCreating.csproj", "{569AF5AB-23E6-4AE9-92B3-0D9CB715E476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathBase", "MathBase\MathBase.csproj", "{04CA0E87-3DEB-455B-A901-0B7260C83854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathBase", "MathBase\MathBase.csproj", "{04CA0E87-3DEB-455B-A901-0B7260C83854}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathBase.Matrixes", "MathBase.Matrixes\MathBase.Matrixes.csproj", "{D6F28238-667F-4A60-A637-8D17BCC5F4CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{04CA0E87-3DEB-455B-A901-0B7260C83854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04CA0E87-3DEB-455B-A901-0B7260C83854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04CA0E87-3DEB-455B-A901-0B7260C83854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F28238-667F-4A60-A637-8D17BCC5F4CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F28238-667F-4A60-A637-8D17BCC5F4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F28238-667F-4A60-A637-8D17BCC5F4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F28238-667F-4A60-A637-8D17BCC5F4CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{641C75F3-2E03-4776-B867-1AA53597D1CE} = {3632F9C8-AE94-433D-985E-7D783C4755B3}
 		{569AF5AB-23E6-4AE9-92B3-0D9CB715E476} = {3632F9C8-AE94-433D-985E-7D783C4755B3}
 		{04CA0E87-3DEB-455B-A901-0B7260C83854} = {3632F9C8-AE94-433D-985E-7D783C4755B3}
+		{D6F28238-667F-4A60-A637-8D17BCC5F4CE} = {3632F9C8-AE94-433D-985E-7D783C4755B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F2D484B-47C6-40AD-A926-E66416DC2A12}

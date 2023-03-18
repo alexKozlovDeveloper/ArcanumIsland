@@ -1,25 +1,27 @@
-﻿using MathBase.Points;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MathBase.MultidimensionalArrays;
+using MathBase.MultidimensionalArrays.Factories;
+using MathBase.Points;
 
-namespace MathBase.MultidimensionalArrays
+namespace MathBase.Matrixes
 {
     public class Matrix<T>
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
 
-        private T[][] items;
+        private T[][] _d2Array;
 
         public Matrix(int width, int height)
         {
             Width = width;
             Height = height;
 
-            items = MatrixHelper.CreateEmptyMatrix<T>(Width, Height);
+            _d2Array = D2ArrayFactory.CreateEmptyMatrix<T>(Width, Height);
         }
 
         public Matrix(T[][] src)
@@ -27,12 +29,12 @@ namespace MathBase.MultidimensionalArrays
             Width = src.GetWidth();
             Height = src.GetHeight();
 
-            items = src.TransformToMatrix();
+            _d2Array = src.TransformTo2dArray();
         }
 
         public T[][] GetAsArray()
         {
-            return items.Copy();
+            return _d2Array.Copy();
         }
 
         public T this[int x, int y]
@@ -43,7 +45,7 @@ namespace MathBase.MultidimensionalArrays
                 {
                     if (y >= 0 && y < Height)
                     {
-                        return items[x][y];
+                        return _d2Array[x][y];
                     }
                 }
 
@@ -55,7 +57,7 @@ namespace MathBase.MultidimensionalArrays
                 {
                     if (y >= 0 && y < Height)
                     {
-                        items[x][y] = value;
+                        _d2Array[x][y] = value;
                     }
                 }
             }
@@ -71,6 +73,6 @@ namespace MathBase.MultidimensionalArrays
             {
                 this[point.X, point.Y] = value;
             }
-        }     
+        }
     }
 }

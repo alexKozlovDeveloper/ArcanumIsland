@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MathBase;
+using MathBase.MultidimensionalArrays;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +28,7 @@ namespace PerlinNoise
         /// <returns></returns>
         public int[][] GetPerlinNoiseMatrix(int dimension, int smoothingSize)
         {
-            if (PerlinNoiseHelper.IsMultipleOfTwo(dimension) == false)
+            if (MathHelper.IsMultipleOfTwo(dimension) == false)
             {
                 throw new NotSupportedException("Dimension must be a multiple of two [2, 4, 8, 16, 32, 64 ...].");
             }
