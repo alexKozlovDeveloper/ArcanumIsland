@@ -61,5 +61,7 @@ namespace MathBase.MultidimensionalArrays
                 .Select(a => point.NewRelativePointMirror(a.x, a.y, width, height));
         }
         #endregion
+
+        
     }
 }

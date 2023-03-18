@@ -13,6 +13,7 @@ namespace AreasCreating
         private readonly Random _random;
 
         private readonly Matrix<string> _matrix;
+
         private List<Area> _areas;
 
         public int Width => _matrix.Width;
@@ -22,11 +23,11 @@ namespace AreasCreating
         //private List<Vector2> _immediatePoints;
         //private List<Vector2> _freePoints;
 
-        public AreasCreator(int width, int height, int seed = -1)
+        public AreasCreator(Random random, int width, int height, int seed = -1)
         {
             _matrix = new Matrix<string>(width, height);
 
-            _random = new Random(seed);
+            _random = random;
 
             _areas = new List<Area>();
             _areasPoints = new List<Vector2>();
@@ -34,13 +35,11 @@ namespace AreasCreating
            // _freePoints = GetAllPoints();
         }
 
-        public void CreateAreas(int minCount, int maxCount)
+        public void CreateAreas(int count)
         {
-            var areasCount = _random.Next(minCount, maxCount);
+            var centers = GetUniqueRandomPoints(count);
 
-            var centers = GetUniqueRandomPoints(areasCount);
-
-            for (int i = 0; i < areasCount; i++)
+            for (int i = 0; i < count; i++)
             {
                 //var center = GetRandomFreePoint();
 

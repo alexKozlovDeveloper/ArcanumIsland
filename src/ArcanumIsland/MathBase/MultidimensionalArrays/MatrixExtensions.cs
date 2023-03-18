@@ -40,6 +40,61 @@ namespace MathBase.MultidimensionalArrays
             return result;
         }
 
+        public static T[][] ForEachItem<T>(this T[][] src, Func<T, T> func)
+        {
+            var result = new T[src.Length][];
+
+            for (int x = 0; x < src.Length; x++)
+            {
+                result[x] = new T[src[x].Length];
+
+                for (int y = 0; y < src[x].Length; y++)
+                {
+                    result[x][y] = func(src[x][y]);
+                }
+            }
+
+            return result;
+        }
+
+        public static T[][] ForEachItemRadial<T>(this T[][] src, Func<T, double, T> func)
+        {
+            var result = new T[src.Length][];
+
+            var center = new Vector2(src.GetWidth() / 2, src.GetHeight() / 2);
+            var radius = center.GetLength();
+
+            for (int x = 0; x < src.Length; x++)
+            {
+                result[x] = new T[src[x].Length];
+
+                for (int y = 0; y < src[x].Length; y++)
+                {
+                    var bassedVector = new Vector2(x - center.X, y - center.Y);
+
+                    var lenghtToCenter = bassedVector.GetLength();
+
+                    var persent = lenghtToCenter / radius;
+
+                    result[x][y] = func(src[x][y], persent);
+                }
+            }
+
+            return result;
+        }
+
+        public static int[][] RadialDecrease(this int[][] src, double decreaseSpeed = 1)
+        {
+            if (decreaseSpeed == 0) { decreaseSpeed = 1; }
+
+            return src.ForEachItemRadial((int val, double lenghtToCenter) => 
+            {
+                var newVal = (1 - lenghtToCenter / decreaseSpeed) * val;
+
+                return (int)newVal; 
+            });
+        }
+
         public static T[][] TransformToMatrix<T>(this T[][] src)
         {
             var width = src.GetWidth();

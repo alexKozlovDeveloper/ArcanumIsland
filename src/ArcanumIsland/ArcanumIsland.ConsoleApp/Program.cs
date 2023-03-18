@@ -20,10 +20,28 @@ namespace ArcanumIsland.ConsoleApp
 
             logger.Info("ArcanumIsland.ConsoleApp: Starting...");
 
-            var areasCreator = new AreasCreator(250, 250);
+            var random = new Random(2001);
 
-            areasCreator.CreateAreas(5, 5);
+
+            var perlin = new PerlinNoiseGenerator();
+
+            var matrix1 = perlin.GetPerlinNoiseMatrix(256, 2);
+            var matrix2 = matrix1.RadialDecrease();
+
+            var img1 = GetImage(matrix1);
+            var img2 = GetImage(matrix2);
+
+            img1.Save($"perlinOrig_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            img2.Save($"radiant_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+            return;
+
+            var areasCreator = new AreasCreator(random, 250, 250);
+
+            areasCreator.CreateAreas(5);
+
             areasCreator.FillAreas();
+
             var matrix = areasCreator.GetMatrix().GetAsArray();
 
             var movedMatrix = areasCreator.MoveAreas(25).GetAsArray();

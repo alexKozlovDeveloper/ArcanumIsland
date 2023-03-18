@@ -34,5 +34,10 @@ namespace MathBase.Points
 
             return new Vector2(newX, newY);
         }
+
+        public static double GetLength(this Vector2 point)
+        {
+            return Math.Sqrt(Math.Pow(point.X, 2) + Math.Pow(point.Y, 2));
+        }
     }
 }
