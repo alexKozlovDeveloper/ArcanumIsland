@@ -25,8 +25,8 @@ namespace ArcanumIsland.ConsoleApp
 
             var perlin = new PerlinNoiseGenerator();
 
-            var matrix1 = perlin.GetPerlinNoiseMatrix(256, 2);
-            var matrix2 = matrix1.RadialDecrease();
+            var matrix1 = perlin.GetPerlinNoiseMatrix(512, 2);
+            var matrix2 = matrix1.RadialDecrease(0.8);
 
             var img1 = GetImage(matrix1);
             var img2 = GetImage(matrix2);

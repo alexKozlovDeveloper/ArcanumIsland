@@ -83,13 +83,15 @@ namespace MathBase.MultidimensionalArrays
             return result;
         }
 
-        public static int[][] RadialDecrease(this int[][] src, double decreaseSpeed = 1)
+        public static int[][] RadialDecrease(this int[][] src, double decreaseSpeed = 2)
         {
             if (decreaseSpeed == 0) { decreaseSpeed = 1; }
 
             return src.ForEachItemRadial((int val, double lenghtToCenter) => 
             {
                 var newVal = (1 - lenghtToCenter / decreaseSpeed) * val;
+
+                if (newVal < 0) { newVal = 0; }
 
                 return (int)newVal; 
             });
