@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MathBase.Matrixes\MathBase.Matrixes.csproj" />
     <ProjectReference Include="..\MathBase\MathBase.csproj" />
   </ItemGroup>
 

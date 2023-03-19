@@ -1,5 +1,5 @@
-﻿using MathBase.Matrixes;
-using MathBase.MultidimensionalArrays;
+﻿using MathBase.MultidimensionalArrays;
+using MathBase.MultidimensionalArrays.Matrixes;
 using MathBase.Points;
 using System;
 using System.Collections.Generic;
@@ -59,20 +59,20 @@ namespace AreasCreating
             //_immediatePoints = _immediatePoints.Distinct().ToList();
         }
 
-        private List<Vector2> GetAllPoints()
-        {
-            var result = new List<Vector2>();
+        //private List<Vector2> GetAllPoints()
+        //{
+        //    var result = new List<Vector2>();
 
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    result.Add(new Vector2(x, y));
-                }
-            }
+        //    for (int x = 0; x < Width; x++)
+        //    {
+        //        for (int y = 0; y < Height; y++)
+        //        {
+        //            result.Add(new Vector2(x, y));
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         //private Vector2 GetRandomFreePoint()
         //{

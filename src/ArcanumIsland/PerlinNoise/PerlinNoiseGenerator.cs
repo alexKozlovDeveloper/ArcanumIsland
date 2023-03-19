@@ -1,5 +1,5 @@
 ﻿using MathBase;
-using MathBase.MultidimensionalArrays;
+using MathBase.MultidimensionalArrays.Matrixes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +26,14 @@ namespace PerlinNoise
         /// </summary>
         /// <param name="dimension">Dimension, must be a multiple of two</param>
         /// <returns></returns>
-        public int[][] GetPerlinNoiseMatrix(int dimension, int smoothingSize)
+        public Matrix<int> GetPerlinNoiseMatrix(int dimension, int smoothingSize)
         {
             if (MathHelper.IsMultipleOfTwo(dimension) == false)
             {
                 throw new NotSupportedException("Dimension must be a multiple of two [2, 4, 8, 16, 32, 64 ...].");
             }
 
-            var matrixes = new List<int[][]>();
+            var matrixes = new List<Matrix<int>>();
 
             for (int i = 2; i < dimension; i *= 2)
             {
@@ -46,8 +46,11 @@ namespace PerlinNoise
 
             var sum = matrixes.Average();
 
-            sum = sum.StretchOnMaximumAndMinimumValue(0, _maxValue)
-                .Smoothing(smoothingSize);
+            //sum = sum.StretchOnMaximumAndMinimumValue(0, _maxValue)
+            //    .Smoothing(smoothingSize);
+
+            sum.StretchOnMaximumAndMinimumValue(0, _maxValue);
+            sum.Smoothing(smoothingSize);
 
             return sum;
         }
@@ -79,24 +82,13 @@ namespace PerlinNoise
         /// <param name="width">Width</param>
         /// <param name="height">Height</param>
         /// <returns></returns>
-        public int[][] GetRandomMatrix(int width, int height)
+        public Matrix<int> GetRandomMatrix(int width, int height)
         {
-            var matrix = new int[width][];
+            var result = new Matrix<int>(width, height);
 
-            for (int i = 0; i < width; i++)
-            {
-                matrix[i] = new int[height];
-            }
+            result.ForEachItem(() => _random.Next(0, _maxValue));
 
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    matrix[x][y] = _random.Next(0, _maxValue);
-                }
-            }
-
-            return matrix;
+            return result;
         }
     }
 }

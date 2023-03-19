@@ -7,8 +7,8 @@ using ArcanumIsland.Core.MapGeneration;
 using ArcanumIsland.Core.MapGeneration.Steps;
 using AreasCreating;
 using MathBase.Points;
-using MathBase.MultidimensionalArrays;
 using PerlinNoise;
+using MathBase.MultidimensionalArrays.Matrixes;
 
 namespace ArcanumIsland.ConsoleApp
 {
@@ -26,10 +26,11 @@ namespace ArcanumIsland.ConsoleApp
             var perlin = new PerlinNoiseGenerator();
 
             var matrix1 = perlin.GetPerlinNoiseMatrix(512, 2);
-            var matrix2 = matrix1.RadialDecrease(0.8);
+            var matrix2 = matrix1.Copy();
+            matrix2.RadialDecrease(0.8);
 
-            var img1 = GetImage(matrix1);
-            var img2 = GetImage(matrix2);
+            var img1 = GetImage(matrix1.GetAsArray());
+            var img2 = GetImage(matrix2.GetAsArray());
 
             img1.Save($"perlinOrig_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             img2.Save($"radiant_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
@@ -42,9 +43,9 @@ namespace ArcanumIsland.ConsoleApp
 
             areasCreator.FillAreas();
 
-            var matrix = areasCreator.GetMatrix().GetAsArray();
+            var matrix = areasCreator.GetMatrix();
 
-            var movedMatrix = areasCreator.MoveAreas(25).GetAsArray();
+            var movedMatrix = areasCreator.MoveAreas(25);
 
             var c = movedMatrix.Convert(a => 
             {
@@ -56,21 +57,24 @@ namespace ArcanumIsland.ConsoleApp
 
             var d = matrix.Convert(a => int.Parse(a.Replace("area_", "")));
 
-            var d1 = d.StretchOnMaximumAndMinimumValue(0, 250);
+            var d1 = d.Copy();
+            d1.StretchOnMaximumAndMinimumValue(0, 250);
             //var d2 = d1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var img = GetImage(d1);
+            var img = GetImage(d1.GetAsArray());
             img.Save($"areas_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
 
-            var c1 = c.StretchOnMaximumAndMinimumValue(0, 250);
+            var c1 = c.Copy();
+            c1.StretchOnMaximumAndMinimumValue(0, 250);
             //var c2 = c1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var cimg = GetImage(c1);
+            var cimg = GetImage(c1.GetAsArray());
             cimg.Save($"areasMoved_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
 
-            var smth = c1.Smoothing(13);
+            var smth = c1.Copy();
+            smth.Smoothing(13);
 
-            var smthimg = GetImage(smth);
+            var smthimg = GetImage(smth.GetAsArray());
             smthimg.Save($"areasMovedSmoothing_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
             //var d1 = Vector2Extensions.BringValueToRange(10, 10);
@@ -116,6 +120,8 @@ namespace ArcanumIsland.ConsoleApp
                 {
                     Color color;
                     var point = matrix[x][y];
+
+                    if (point < 0) { point = 0; }
 
                     color = Color.FromArgb(point, point, point);
 

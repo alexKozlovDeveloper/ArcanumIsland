@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathBase.MultidimensionalArrays
+namespace MathBase.MultidimensionalArrays.Matrixes
 {
-    public static class D2ArraysHelper
+    public static class MatrixHelper
     {
         public static bool IsOutOf2dArray(int width, int height, Vector2 point)
         {

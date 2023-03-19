@@ -44,7 +44,7 @@ namespace ArcanumIsland.MapViewer
 
 
 
-            AddImageToBitmap(resX, resY, matrix);
+            AddImageToBitmap(resX, resY, matrix.GetAsArray());
         }
 
         private void AddImageToBitmap(int resX, int resY, int[][] matrix) 

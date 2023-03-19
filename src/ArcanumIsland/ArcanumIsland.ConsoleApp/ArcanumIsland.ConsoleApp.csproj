@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ArcanumIsland.Core\ArcanumIsland.Core.csproj" />
     <ProjectReference Include="..\AreasCreating\AreasCreating.csproj" />
-    <ProjectReference Include="..\MathBase.Matrixes\MathBase.Matrixes.csproj" />
     <ProjectReference Include="..\MathBase\MathBase.csproj" />
   </ItemGroup>
 
