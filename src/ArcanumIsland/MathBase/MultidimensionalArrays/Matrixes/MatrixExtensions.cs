@@ -297,5 +297,40 @@ namespace MathBase.MultidimensionalArrays.Matrixes
 
             return result;
         }
+
+        public static Matrix<double> ResizeMatrix(this Matrix<int> matrix, int newWidth, int newHeight)
+        {
+            double widthStepSize = (double)matrix.Width / (double)newWidth;
+            double heightStepSize = (double)matrix.Height / (double)newHeight;
+
+            var newMatrix = new Matrix<double>(newWidth, newHeight);
+
+            for (int newX = 0; newX < newWidth; newX++)
+            {
+                var oldX = newX * widthStepSize;
+
+                for (int newY = 0; newY < newHeight; newY++)
+                {
+                    var oldY = newY * heightStepSize;
+
+                    MathHelper.GetIntegerAndFractionalPart(oldX, out int stepBaseX, out double percentX);
+                    MathHelper.GetIntegerAndFractionalPart(oldY, out int stepBaseY, out double percentY);
+
+                    var increasedStepBaseX = stepBaseX < matrix.Width - 1 ? stepBaseX + 1 : 0;
+                    var increasedStepBaseY = stepBaseY < matrix.Height - 1 ? stepBaseY + 1 : 0;
+
+                    var a1 = matrix[stepBaseX, stepBaseY];
+                    var a2 = matrix[increasedStepBaseX, stepBaseY];
+                    var b1 = matrix[stepBaseX, increasedStepBaseY];
+                    var b2 = matrix[increasedStepBaseX, increasedStepBaseY];
+
+                    var value = MathHelper.GetSquareLerp(a1, a2, b1, b2, percentX, percentY);
+
+                    newMatrix[newX, newY] = value;
+                }
+            }
+
+            return newMatrix;
+        }
     }
 }

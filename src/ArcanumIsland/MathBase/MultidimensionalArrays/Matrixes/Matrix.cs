@@ -21,7 +21,7 @@ namespace MathBase.MultidimensionalArrays.Matrixes
             Width = width;
             Height = height;
 
-            _d2Array = D2ArrayFactory.CreateEmptyMatrix<T>(Width, Height);
+            _d2Array = D2ArrayFactory.CreateEmptyD2Array<T>(Width, Height);
         }
 
         public Matrix(Vector2 size)
@@ -29,7 +29,7 @@ namespace MathBase.MultidimensionalArrays.Matrixes
             Width = size.X;
             Height = size.Y;
 
-            _d2Array = D2ArrayFactory.CreateEmptyMatrix<T>(Width, Height);
+            _d2Array = D2ArrayFactory.CreateEmptyD2Array<T>(Width, Height);
         }
 
         public Matrix(T[][] src)

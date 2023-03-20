@@ -9,6 +9,7 @@ using AreasCreating;
 using MathBase.Points;
 using PerlinNoise;
 using MathBase.MultidimensionalArrays.Matrixes;
+using ArcanumIsland.Core.Additionals;
 
 namespace ArcanumIsland.ConsoleApp
 {
@@ -29,12 +30,20 @@ namespace ArcanumIsland.ConsoleApp
             var matrix2 = matrix1.Copy();
             matrix2.RadialDecrease(0.8);
 
-            var img1 = GetImage(matrix1.GetAsArray());
-            var img2 = GetImage(matrix2.GetAsArray());
+            var img1 = matrix1.ToBitmap();
+            var img2 = matrix2.ToBitmap();
 
             img1.Save($"perlinOrig_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             img2.Save($"radiant_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
+            var ff1 = perlin.GetPerlinNoiseMatrix(32, 2);
+            var ff1img1 = ff1.ToBitmap();
+            ff1img1.Save($"perlin32_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+            var ff2 = ff1.ResizeMatrix(500, 500);
+            var ff3 = ff2.ToInt();
+            var ff2img1 = ff3.ToBitmap();
+            ff2img1.Save($"perlin32_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             //return;
 
             var areasCreator = new AreasCreator(random, 250, 250);
@@ -60,21 +69,21 @@ namespace ArcanumIsland.ConsoleApp
             var d1 = d.Copy();
             d1.StretchOnMaximumAndMinimumValue(0, 250);
             //var d2 = d1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var img = GetImage(d1.GetAsArray());
+            var img = d1.ToBitmap();
             img.Save($"areas_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
 
             var c1 = c.Copy();
             c1.StretchOnMaximumAndMinimumValue(0, 250);
             //var c2 = c1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var cimg = GetImage(c1.GetAsArray());
+            var cimg = c1.ToBitmap();
             cimg.Save($"areasMoved_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
 
             var smth = c1.Copy();
             smth.Smoothing(13);
 
-            var smthimg = GetImage(smth.GetAsArray());
+            var smthimg = smth.ToBitmap();
             smthimg.Save($"areasMovedSmoothing_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
             //var d1 = Vector2Extensions.BringValueToRange(10, 10);
@@ -86,15 +95,15 @@ namespace ArcanumIsland.ConsoleApp
 
             //var perlin = new PerlinNoiseGenerator();
 
-            //var matrix1 = perlin.GetPerlinNoiseMatrix(256, 2);
+            var pp1 = perlin.GetPerlinNoiseMatrix(256, 2);
 
-            //var matrix2 = matrix1.ResizeMatrix(500, 800);
+            var pp2M = pp1.ResizeMatrix(500, 800);
 
-            //var img1 = GetImage(matrix1);
-            //var img2 = GetImage(PerlinNoiseHelper.Convert(matrix2));
+            var pp1img = pp1.ToBitmap();
+            var pp2img = pp2M.ToInt().ToBitmap();
 
-            //img1.Save("src.png");
-            //img2.Save("scaled.png");
+            pp1img.Save($"src1_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            pp2img.Save($"src1_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
             //var mapCreator = new MapCreator();
 
@@ -105,37 +114,37 @@ namespace ArcanumIsland.ConsoleApp
             logger.Info("ArcanumIsland.ConsoleApp: Ending...");
         }
 
-        private static Bitmap GetImage(int[][] matrix)
-        {
-            int width = matrix.Length;
-            int height = matrix[0].Length;
+        //private static Bitmap GetImage(int[][] matrix)
+        //{
+        //    int width = matrix.Length;
+        //    int height = matrix[0].Length;
 
-            var multiplayer = 1;
+        //    var multiplayer = 1;
 
-            var image = new Bitmap(width * multiplayer, height * multiplayer);
+        //    var image = new Bitmap(width * multiplayer, height * multiplayer);
 
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    Color color;
-                    var point = matrix[x][y];
+        //    for (int x = 0; x < width; x++)
+        //    {
+        //        for (int y = 0; y < height; y++)
+        //        {
+        //            Color color;
+        //            var point = matrix[x][y];
 
-                    if (point < 0) { point = 0; }
+        //            if (point < 0) { point = 0; }
 
-                    color = Color.FromArgb(point, point, point);
+        //            color = Color.FromArgb(point, point, point);
 
-                    for (int i = 0; i < multiplayer; i++)
-                    {
-                        for (int j = 0; j < multiplayer; j++)
-                        {
-                            image.SetPixel(x * multiplayer + i, y * multiplayer + j, color);
-                        }
-                    }
-                }
-            }
+        //            for (int i = 0; i < multiplayer; i++)
+        //            {
+        //                for (int j = 0; j < multiplayer; j++)
+        //                {
+        //                    image.SetPixel(x * multiplayer + i, y * multiplayer + j, color);
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return image;
-        }
+        //    return image;
+        //}
     }
 }

@@ -39,7 +39,7 @@ namespace MathBase.MultidimensionalArrays
             var width = src.GetWidth();
             var height = src.GetHeight();
 
-            var result = D2ArrayFactory.CreateEmptyMatrix<T>(width, height);
+            var result = D2ArrayFactory.CreateEmptyD2Array<T>(width, height);
 
             for (int x = 0; x < src.Length; x++)
             {

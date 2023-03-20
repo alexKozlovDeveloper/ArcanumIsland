@@ -1,5 +1,6 @@
 ﻿using MathBase;
 using MathBase.MultidimensionalArrays.Matrixes;
+using MathBase.MultidimensionalArrays.Matrixes.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,58 +38,19 @@ namespace PerlinNoise
 
             for (int i = 2; i < dimension; i *= 2)
             {
-                var m = GetRandomMatrix(i, i);
+                var matrix = MatrixFactory.GetRandomMatrix(_random, i, i, _maxValue);
 
-                m = m.IncreaseOctave(dimension / i);
+                matrix = matrix.IncreaseOctave(dimension / i);
 
-                matrixes.Add(m);
+                matrixes.Add(matrix);
             }
 
             var sum = matrixes.Average();
-
-            //sum = sum.StretchOnMaximumAndMinimumValue(0, _maxValue)
-            //    .Smoothing(smoothingSize);
 
             sum.StretchOnMaximumAndMinimumValue(0, _maxValue);
             sum.Smoothing(smoothingSize);
 
             return sum;
-        }
-
-        //private int[][] GetPerlinNoiseMatrix_experimental(int width, int height)
-        //{
-        //    var matrixes = new List<int[][]>();
-
-        //    var origin = GetRandomMatrix(width, height);
-
-        //    matrixes.Add(origin);
-
-        //    for (int i = width / 2; i >= 2; i /= 2)
-        //    {
-        //        var m = origin.DecreaseOctave(i);
-        //        var m2 = m.IncreaseOctave(i);
-
-        //        matrixes.Add(m2);
-        //    }
-
-        //    var sum = matrixes.Average();
-
-        //    return sum.Smoothing();
-        //}
-
-        /// <summary>
-        /// Get matrix with random values
-        /// </summary>
-        /// <param name="width">Width</param>
-        /// <param name="height">Height</param>
-        /// <returns></returns>
-        public Matrix<int> GetRandomMatrix(int width, int height)
-        {
-            var result = new Matrix<int>(width, height);
-
-            result.ForEachItem(() => _random.Next(0, _maxValue));
-
-            return result;
-        }
+        }        
     }
 }
