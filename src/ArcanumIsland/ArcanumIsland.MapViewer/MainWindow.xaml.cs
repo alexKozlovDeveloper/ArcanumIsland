@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing.Imaging;
 using System.Drawing;
+using System.Windows.Interop;
 
 namespace ArcanumIsland.MapViewer
 {
@@ -53,7 +54,7 @@ namespace ArcanumIsland.MapViewer
 
             var mapCreator = new MapCreator(150, 150, 1984);
 
-            var altitudeResult = mapCreator.AddAltitude(new AltitudeStepParams 
+            var altitudeResult = mapCreator.AddAltitude(new AltitudeStepParams
             {
                 Dimension = 256,
                 SmoothingSize = 2,
@@ -73,12 +74,12 @@ namespace ArcanumIsland.MapViewer
             var grassResult = mapCreator.AddGrass(new GrassStepParams
             {
                 BottomEdge = 110,
-                TopEdge = 200,
+                TopEdge = 150,
             });
 
             var snowResult = mapCreator.AddSnow(new SnowStepParams
             {
-                BottomEdge = 200,
+                BottomEdge = 150,
                 TopEdge = 250,
             });
 
@@ -86,9 +87,13 @@ namespace ArcanumIsland.MapViewer
 
             var bitmap = MapToImage(map);
 
-            bitmap.Save($"mapCreator_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+           // bitmap.Save($"mapCreator_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
             AddImageToBitmap(resX, resY, matrix.GetAsArray());
+
+            var d = ImageSourceFromBitmap(bitmap);
+
+            MainImage.Source = d;
         }
 
         public Bitmap MapToImage(Map map) 
@@ -121,6 +126,24 @@ namespace ArcanumIsland.MapViewer
             return colorMatrix.ToBitmap();
         }
 
+        private BitmapImage BmpImageFromBmp(Bitmap bmp)
+        {
+            using (var memory = new System.IO.MemoryStream())
+            {
+                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+        }
+
         private void AddImageToBitmap(int resX, int resY, int[][] matrix) 
         {
             WriteableBitmap writableImg = new WriteableBitmap(resX, resY, 96, 96, PixelFormats.Bgr32, null);
@@ -146,6 +169,16 @@ namespace ArcanumIsland.MapViewer
             writableImg.Unlock();
 
             MainImage.Source = writableImg;
+        }
+
+        public ImageSource ImageSourceFromBitmap(Bitmap bmp)
+        {
+            var handle = bmp.GetHbitmap();
+            //try
+            //{
+                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            //}
+            //finally { DeleteObject(handle); }
         }
     }   
 }
