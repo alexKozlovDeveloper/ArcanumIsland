@@ -46,7 +46,7 @@ namespace ArcanumIsland.ConsoleApp
             ff2img1.Save($"perlin32_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             //return;
 
-            var areasCreator = new AreasCreator(random, 250, 250);
+            var areasCreator = new AreasCreator(2001, 250, 250);
 
             areasCreator.CreateAreas(5);
 

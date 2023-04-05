@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps
 {
-    public class AltitudeStep : IStep
+    public class BaseBaseAltitudeStep : IStep
     {
         private PerlinNoiseGenerator _noiseGenerator;
-        private AltitudeStepParams _stepParams;
+        private BaseAltitudeStepParams _stepParams;
 
-        public AltitudeStep(int seed, AltitudeStepParams stepParams)
+        public BaseBaseAltitudeStep(int seed, BaseAltitudeStepParams stepParams)
         {
             _noiseGenerator = new PerlinNoiseGenerator(seed);
 
@@ -34,7 +34,7 @@ namespace ArcanumIsland.Core.MapGeneration.Steps
 
             map.CellsMatrix.ForEachItem((x, y, cell) =>
             {
-                var altitude = new Altitude(altitudeMatrix[x, y]);
+                var altitude = new BaseAltitude(altitudeMatrix[x, y]);
 
                 cell.AddContent(altitude);
 

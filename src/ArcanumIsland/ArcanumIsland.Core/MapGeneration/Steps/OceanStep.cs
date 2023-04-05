@@ -29,7 +29,7 @@ namespace ArcanumIsland.Core.MapGeneration.Steps
 
             map.CellsMatrix.ForEachItem((x, y, cell) =>
             {
-                var altitude = cell.GetCellContent<Altitude>();
+                var altitude = cell.GetCellContent<BaseAltitude>();
 
                 if (altitude == null) { return cell; }
 

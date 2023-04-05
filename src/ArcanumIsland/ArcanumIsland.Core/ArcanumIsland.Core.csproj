@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AreasCreating\AreasCreating.csproj" />
     <ProjectReference Include="..\MathBase\MathBase.csproj" />
     <ProjectReference Include="..\PerlinNoise\PerlinNoise.csproj" />
   </ItemGroup>

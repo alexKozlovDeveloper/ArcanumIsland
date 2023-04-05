@@ -20,17 +20,25 @@ namespace ArcanumIsland.Core.MapGeneration
             _seed = seed;
         }
 
-        public IStepResult AddAltitude(AltitudeStepParams altitudeParams) 
+        public IStepResult AddBaseAltitude(BaseAltitudeStepParams baseAltitudeParams) 
         {
-            //var altitudeParams = new AltitudeStepParams()
-            //{
-            //    Dimension = 16,
-            //    SmoothingSize = 1
-            //};
+            var baseAltitudeStep = new BaseBaseAltitudeStep(_seed, baseAltitudeParams);
 
-            var altitudeStep = new AltitudeStep(_seed, altitudeParams);
+            return baseAltitudeStep.Process(_currentMap);
+        }
 
-            return altitudeStep.Process(_currentMap);
+        public IStepResult AddTectonicPlates(TectonicPlatesStepParams tectonicPlatesParams)
+        {
+            var TectonicPlatesStep = new TectonicPlateStep(_seed, tectonicPlatesParams);
+
+            return TectonicPlatesStep.Process(_currentMap);
+        }
+
+        public IStepResult AddResultAltitude(ResultAltitudeStepParams resultAltitudeParams)
+        {
+            var resultAltitudeStep = new ResultAltitudeStep(_seed, resultAltitudeParams);
+
+            return resultAltitudeStep.Process(_currentMap);
         }
 
         public IStepResult AddOcean(OceanStepParams oceanParams)

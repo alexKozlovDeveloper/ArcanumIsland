@@ -24,11 +24,11 @@ namespace AreasCreating
         //private List<Vector2> _immediatePoints;
         //private List<Vector2> _freePoints;
 
-        public AreasCreator(Random random, int width, int height, int seed = -1)
+        public AreasCreator(int seed, int width, int height)
         {
             _matrix = new Matrix<string>(width, height);
 
-            _random = random;
+            _random = new Random(seed);
 
             _areas = new List<Area>();
             _areasPoints = new List<Vector2>();

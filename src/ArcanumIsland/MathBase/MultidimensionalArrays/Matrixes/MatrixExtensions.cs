@@ -121,6 +121,25 @@ namespace MathBase.MultidimensionalArrays.Matrixes
             });
         }
 
+        public static void StretchOnMaximumAndMinimumValue(this Matrix<double> src, int newMin, int newMax)
+        {
+            var maxValue = src.GetMax();
+            var minValue = src.GetMin();
+
+            src.ForEachItem((x, y) =>
+            {
+                double newValue = src[x, y];
+
+                newValue -= minValue;
+
+                double pos = newValue / (maxValue - minValue);
+
+                newValue = pos * (newMax - newMin) + newMin;
+
+                return newValue;
+            });
+        }
+
         public static Matrix<int> Sum(this Matrix<int> m1, Matrix<int> m2)
         {
             if (m1.Width != m2.Width || m1.Height != m2.Height) { throw new NotSupportedException("Size of matrix must be the same."); }
@@ -184,6 +203,25 @@ namespace MathBase.MultidimensionalArrays.Matrixes
                 }
 
                 var value = (int)values.Average();
+
+                return value;
+            });
+        }
+
+        public static void Smoothing(this Matrix<double> matrix, int size = 1)
+        {
+            matrix.ForEachItem((x, y) =>
+            {
+                var points = GetAdjacentXY(x, y, size, matrix.Width, matrix.Height, true);
+
+                var values = new List<double>();
+
+                foreach (var point in points)
+                {
+                    values.Add(matrix[point.Key, point.Value]);
+                }
+
+                var value = values.Average();
 
                 return value;
             });

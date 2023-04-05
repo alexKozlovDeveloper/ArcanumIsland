@@ -7,7 +7,7 @@ using ArcanumIsland.Core.MapGeneration.Steps.Interfaces;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Param
 {
-    public class AltitudeStepParams : IStepParams
+    public class BaseAltitudeStepParams : IStepParams
     {
         public int Dimension { get; set; }
         public int SmoothingSize { get; set; }

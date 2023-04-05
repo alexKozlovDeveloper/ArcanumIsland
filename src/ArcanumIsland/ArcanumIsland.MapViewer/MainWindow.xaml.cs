@@ -41,23 +41,35 @@ namespace ArcanumIsland.MapViewer
 
         private void acceptButton_Click(object sender, RoutedEventArgs e)
         {
-            var generator = new PerlinNoiseGenerator(_rnd.Next(), 255);
+            //var generator = new PerlinNoiseGenerator(_rnd.Next(), 255);
 
-            var resX = 256;
-            var resY = resX;
+            //var resX = 256;
+            //var resY = resX;
 
-            var matrix = generator.GetPerlinNoiseMatrix(resX, 4);
+            //var matrix = generator.GetPerlinNoiseMatrix(resX, 4);
 
-            var newRexX = 500;
-            var newRexY = 300;
+            //var newRexX = 500;
+            //var newRexY = 300;
 
 
             var mapCreator = new MapCreator(150, 150, 1984);
 
-            var altitudeResult = mapCreator.AddAltitude(new AltitudeStepParams
+            var baseAltitudeResult = mapCreator.AddBaseAltitude(new BaseAltitudeStepParams
             {
                 Dimension = 256,
                 SmoothingSize = 2,
+            });
+
+            var tectonicPlatesResult = mapCreator.AddTectonicPlates(new TectonicPlatesStepParams
+            {
+                Width = 250,
+                Height = 250,
+                AreasCount = 5,
+            });
+
+            var resultAltitudeResult = mapCreator.AddResultAltitude(new ResultAltitudeStepParams
+            {
+
             });
 
             var oceanResult = mapCreator.AddOcean(new OceanStepParams
@@ -87,13 +99,47 @@ namespace ArcanumIsland.MapViewer
 
             var bitmap = MapToImage(map);
 
-           // bitmap.Save($"mapCreator_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            //bitmap.Save($"mapCreator_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
-            AddImageToBitmap(resX, resY, matrix.GetAsArray());
+            //AddImageToBitmap(resX, resY, matrix.GetAsArray());
 
-            var d = ImageSourceFromBitmap(bitmap);
+            var imageSource = ImageSourceFromBitmap(bitmap);
 
-            MainImage.Source = d;
+            MainImage.Source = imageSource;
+
+
+            var baseAltitude = map.CellsMatrix.Convert(cell =>
+            {
+                var baseAltitude = cell.GetCellContent<BaseAltitude>();
+
+                if (baseAltitude == null) { return 0; }
+
+                return baseAltitude.Weight;
+            });
+
+            var tectonicPlate = map.CellsMatrix.Convert(cell =>
+            {
+                var tectonicPlate = cell.GetCellContent<TectonicPlate>();
+
+                if (tectonicPlate == null) { return 0; }
+
+                return tectonicPlate.PlateCount;
+            });
+
+            tectonicPlate.StretchOnMaximumAndMinimumValue(0, 250);
+
+            var resultAltitude = map.CellsMatrix.Convert(cell =>
+            {
+                var resultAltitude = cell.GetCellContent<ResultAltitude>();
+
+                if (resultAltitude == null) { return 0; }
+
+                return resultAltitude.Weight;
+            });
+
+            baseAltitude.ToBitmap().Save($"baseAltitude_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            tectonicPlate.ToBitmap().Save($"tectonicPlate_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            resultAltitude.ToBitmap().Save($"resultAltitude_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
         }
 
         public Bitmap MapToImage(Map map) 
@@ -126,24 +172,6 @@ namespace ArcanumIsland.MapViewer
             return colorMatrix.ToBitmap();
         }
 
-        private BitmapImage BmpImageFromBmp(Bitmap bmp)
-        {
-            using (var memory = new System.IO.MemoryStream())
-            {
-                bmp.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
-            }
-        }
-
         private void AddImageToBitmap(int resX, int resY, int[][] matrix) 
         {
             WriteableBitmap writableImg = new WriteableBitmap(resX, resY, 96, 96, PixelFormats.Bgr32, null);
@@ -174,11 +202,13 @@ namespace ArcanumIsland.MapViewer
         public ImageSource ImageSourceFromBitmap(Bitmap bmp)
         {
             var handle = bmp.GetHbitmap();
-            //try
-            //{
-                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            //}
-            //finally { DeleteObject(handle); }
+
+            return Imaging.CreateBitmapSourceFromHBitmap(
+                handle, 
+                IntPtr.Zero, 
+                Int32Rect.Empty, 
+                BitmapSizeOptions.FromEmptyOptions()
+            );
         }
     }   
 }

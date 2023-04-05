@@ -22,5 +22,12 @@ namespace ArcanumIsland.Core.MapGeneration
             CellsMatrix.ForEachItem((x, y) => new Cell(x, y));
         }
 
+        //public Matrix<T> GetMatrixAs<T>() 
+        //{
+        //    return CellsMatrix.Convert(cell => 
+        //    {
+        //        return cell.GetCellContent<T>();
+        //    });
+        //}
     }
 }
