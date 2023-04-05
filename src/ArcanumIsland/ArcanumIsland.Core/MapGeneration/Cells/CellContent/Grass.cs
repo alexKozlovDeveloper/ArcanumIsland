@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Steps
+namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
 {
-    public class EmptyStepResult : IStepResult
+    public class Grass : ICellContent
     {
+
     }
 }

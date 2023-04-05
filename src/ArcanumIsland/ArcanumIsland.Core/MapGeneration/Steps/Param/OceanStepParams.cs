@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
+namespace ArcanumIsland.Core.MapGeneration.Steps.Param
 {
-    public interface ICellContent
+    public class OceanStepParams
     {
-
+        public int SeaLevel { get; set; }
     }
 }

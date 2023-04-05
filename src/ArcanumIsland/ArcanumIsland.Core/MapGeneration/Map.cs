@@ -1,4 +1,5 @@
 ﻿using ArcanumIsland.Core.MapGeneration.Cells;
+using MathBase.MultidimensionalArrays.Matrixes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,16 @@ namespace ArcanumIsland.Core.MapGeneration
 {
     public class Map
     {
-        public int Height { get; private set; }
-        public int Width { get; private set; }
+        public int Width { get { return CellsMatrix.Width; } }
+        public int Height { get { return CellsMatrix.Height; } }
 
-        public List<List<Cell>> Cells { get; private set; }
+        public Matrix<Cell> CellsMatrix { get; private set; }
 
         public Map(int height, int width)
         {
-            Height = height;
-            Width = width;
+            CellsMatrix = new Matrix<Cell>(width, height);
 
-            Cells = new List<List<Cell>>(Height);
-
-            foreach (var row in Cells)
-            {
-                //  row
-            }
+            CellsMatrix.ForEachItem((x, y) => new Cell(x, y));
         }
 
     }

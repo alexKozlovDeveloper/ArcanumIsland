@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ArcanumIsland.Core\ArcanumIsland.Core.csproj" />
     <ProjectReference Include="..\PerlinNoise\PerlinNoise.csproj" />
   </ItemGroup>
 

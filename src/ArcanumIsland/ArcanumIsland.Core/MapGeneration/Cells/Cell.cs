@@ -26,5 +26,20 @@ namespace ArcanumIsland.Core.MapGeneration.Cells
         {
             CellContents.Add(content);
         }
+
+        public T GetCellContent<T>() 
+        {
+            return (T)CellContents.FirstOrDefault(a => a.GetType() == typeof(T));
+        }
+
+        public bool IsContainCellContent<T>()
+        {
+            if (GetCellContent<T>() != null) 
+            {
+                return true; 
+            }
+
+            return false;
+        }
     }
 }

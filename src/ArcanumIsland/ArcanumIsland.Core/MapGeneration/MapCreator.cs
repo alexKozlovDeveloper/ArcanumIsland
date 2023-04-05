@@ -4,30 +4,76 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArcanumIsland.Core.MapGeneration.Steps;
+using ArcanumIsland.Core.MapGeneration.Steps.Interfaces;
+using ArcanumIsland.Core.MapGeneration.Steps.Param;
 
 namespace ArcanumIsland.Core.MapGeneration
 {
     public class MapCreator
     {
         private Map _currentMap;
+        private int _seed;
 
-        public void CreateMap()
+        public MapCreator(int width, int height, int seed) 
         {
-            _currentMap = new Map(64, 64);
+            _currentMap = new Map(width, height);
+            _seed = seed;
         }
 
-        public IStepResult ProcessStep(IStep step)
+        public IStepResult AddAltitude(AltitudeStepParams altitudeParams) 
         {
-            if (_currentMap == null) { return null; }
+            //var altitudeParams = new AltitudeStepParams()
+            //{
+            //    Dimension = 16,
+            //    SmoothingSize = 1
+            //};
 
-            return new EmptyStepResult();
+            var altitudeStep = new AltitudeStep(_seed, altitudeParams);
+
+            return altitudeStep.Process(_currentMap);
         }
 
-        public IEnumerable<IStepResult> ProcessStep(IEnumerable<IStep> steps)
+        public IStepResult AddOcean(OceanStepParams oceanParams)
         {
-            if (_currentMap == null) { return null; }
+            var oceanStep = new OceanStep(_seed, oceanParams);
 
-            return new List<IStepResult>();
+            return oceanStep.Process(_currentMap);
         }
+
+        public IStepResult AddSand(SandStepParams sandParams)
+        {
+            var sendStep = new SandStep(_seed, sandParams);
+
+            return sendStep.Process(_currentMap);
+        }
+
+        public IStepResult AddGrass(GrassStepParams grassParams)
+        {
+            var grassStep = new GrassStep(_seed, grassParams);
+
+            return grassStep.Process(_currentMap);
+        }
+
+        public IStepResult AddSnow(SnowStepParams snowParams)
+        {
+            var snowStep = new SnowStep(_seed, snowParams);
+
+            return snowStep.Process(_currentMap);
+        }
+
+        public Map GetMap() 
+        {
+            return _currentMap;
+        }
+
+        //public IStepResult ProcessStep(IStep step, IStepParams stepParams)
+        //{
+        //    return step.Process(_currentMap, stepParams);
+        //}
+
+        //public IEnumerable<IStepResult> ProcessStep(IEnumerable<IStep> steps)
+        //{
+        //    return new List<IStepResult>();
+        //}
     }
 }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
+namespace ArcanumIsland.Core.MapGeneration.Steps.Interfaces
 {
-    public interface ICellContent
+    public interface IStepParams
     {
-
     }
 }

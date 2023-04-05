@@ -1,4 +1,10 @@
-﻿using PerlinNoise;
+﻿using ArcanumIsland.Core.MapGeneration;
+using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
+using ArcanumIsland.Core.MapGeneration.Steps;
+using ArcanumIsland.Core.MapGeneration.Steps.Param;
+using MathBase.MultidimensionalArrays.Matrixes;
+using ArcanumIsland.Core.Additionals;
+using PerlinNoise;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +19,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace ArcanumIsland.MapViewer
 {
@@ -43,8 +51,74 @@ namespace ArcanumIsland.MapViewer
             var newRexY = 300;
 
 
+            var mapCreator = new MapCreator(150, 150, 1984);
+
+            var altitudeResult = mapCreator.AddAltitude(new AltitudeStepParams 
+            {
+                Dimension = 256,
+                SmoothingSize = 2,
+            });
+
+            var oceanResult = mapCreator.AddOcean(new OceanStepParams
+            {
+                SeaLevel = 100,
+            });
+
+            var sandResult = mapCreator.AddSand(new SandStepParams
+            {
+                BottomEdge = 100,
+                TopEdge = 110,
+            });
+
+            var grassResult = mapCreator.AddGrass(new GrassStepParams
+            {
+                BottomEdge = 110,
+                TopEdge = 200,
+            });
+
+            var snowResult = mapCreator.AddSnow(new SnowStepParams
+            {
+                BottomEdge = 200,
+                TopEdge = 250,
+            });
+
+            var map = mapCreator.GetMap();
+
+            var bitmap = MapToImage(map);
+
+            bitmap.Save($"mapCreator_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
             AddImageToBitmap(resX, resY, matrix.GetAsArray());
+        }
+
+        public Bitmap MapToImage(Map map) 
+        {
+            var colorMatrix = map.CellsMatrix.Convert(cell => 
+            {
+                if (cell.IsContainCellContent<Ocean>())
+                {
+                    return System.Drawing.Color.FromArgb(0, 0 ,200);
+                }
+
+                if (cell.IsContainCellContent<Grass>())
+                {
+                    return System.Drawing.Color.FromArgb(0, 200, 0);
+                }
+
+                if (cell.IsContainCellContent<Sand>())
+                {
+                    return System.Drawing.Color.FromArgb(200, 200, 0);
+                }
+
+                if (cell.IsContainCellContent<Snow>())
+                {
+                    return System.Drawing.Color.FromArgb(200, 200, 200);
+                }
+
+                return System.Drawing.Color.FromArgb(150, 150, 150);
+            });
+
+            return colorMatrix.ToBitmap();
         }
 
         private void AddImageToBitmap(int resX, int resY, int[][] matrix) 

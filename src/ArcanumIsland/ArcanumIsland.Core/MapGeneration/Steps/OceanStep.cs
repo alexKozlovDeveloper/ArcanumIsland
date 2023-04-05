@@ -2,7 +2,6 @@
 using ArcanumIsland.Core.MapGeneration.Steps.Interfaces;
 using ArcanumIsland.Core.MapGeneration.Steps.Param;
 using ArcanumIsland.Core.MapGeneration.Steps.Result;
-using MathBase.MultidimensionalArrays.Matrixes;
 using PerlinNoise;
 using System;
 using System.Collections.Generic;
@@ -12,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps
 {
-    public class AltitudeStep : IStep
+    public class OceanStep : IStep
     {
         private PerlinNoiseGenerator _noiseGenerator;
-        private AltitudeStepParams _stepParams;
+        private OceanStepParams _stepParams;
 
-        public AltitudeStep(int seed, AltitudeStepParams stepParams)
+        public OceanStep(int seed, OceanStepParams stepParams)
         {
             _noiseGenerator = new PerlinNoiseGenerator(seed);
 
@@ -28,20 +27,20 @@ namespace ArcanumIsland.Core.MapGeneration.Steps
         {
             var stepResult = new StepResult();
 
-            var altitudeMatrixRaw = _noiseGenerator.GetPerlinNoiseMatrix(_stepParams.Dimension, _stepParams.SmoothingSize);
-
-            var altitudeMatrix = altitudeMatrixRaw.ResizeMatrix(map.Width, map.Height);
-
             map.CellsMatrix.ForEachItem((x, y, cell) =>
             {
-                var altitude = new Altitude(altitudeMatrix[x, y]);
+                var altitude = cell.GetCellContent<Altitude>();
 
-                cell.AddContent(altitude);
+                if (altitude == null) { return cell; }
+
+                if (altitude.Weight < _stepParams.SeaLevel) 
+                {
+                    var ocean = new Ocean();
+                    cell.AddContent(ocean);
+                }
 
                 return cell;
             });
-
-            stepResult.AddMatrix("altitudeMatrix", altitudeMatrix);
 
             return stepResult;
         }

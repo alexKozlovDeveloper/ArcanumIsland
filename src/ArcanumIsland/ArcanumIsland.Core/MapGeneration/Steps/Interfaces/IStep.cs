@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Steps
+namespace ArcanumIsland.Core.MapGeneration.Steps.Interfaces
 {
-    public interface IStepResult
+    public interface IStep
     {
+        IStepResult Process(Map map);
     }
 }
