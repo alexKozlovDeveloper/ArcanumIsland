@@ -20,6 +20,8 @@ namespace ArcanumIsland.Core.MapGeneration.Steps
         private PerlinNoiseGenerator _noiseGenerator;
         private TectonicPlatesStepParams _stepParams;
 
+        public IStepParams StepParams => _stepParams;
+        public string Name { get { return GetType().Name; } }
         public TectonicPlateStep(int seed, TectonicPlatesStepParams stepParams)
         {
             _seed = seed;

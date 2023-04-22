@@ -22,6 +22,9 @@ using System.Windows.Shapes;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.Windows.Interop;
+using System.ComponentModel.Design;
+using System.Reflection;
+using System.Windows.Media.Animation;
 
 namespace ArcanumIsland.MapViewer
 {
@@ -31,16 +34,31 @@ namespace ArcanumIsland.MapViewer
     public partial class MainWindow : Window
     {
         private Random _rnd;
+        private BaseAltitudeStepParams _dd;
 
         public MainWindow()
         {
             InitializeComponent();
 
             _rnd = new Random(696);
+
+
+
+            var controller = new MapCreatingController(MainImage, SetupPanel);
+
+
+            controller.AddStep(new BaseBaseAltitudeStep(696, new BaseAltitudeStepParams
+            {
+                Dimension = 256,
+                SmoothingSize = 2,
+            }));
+
         }
 
         private void acceptButton_Click(object sender, RoutedEventArgs e)
         {
+
+
             //var generator = new PerlinNoiseGenerator(_rnd.Next(), 255);
 
             //var resX = 256;
@@ -51,6 +69,21 @@ namespace ArcanumIsland.MapViewer
             //var newRexX = 500;
             //var newRexY = 300;
 
+            _dd = new BaseAltitudeStepParams
+            {
+                Dimension = 256,
+                SmoothingSize = 2,
+            };
+
+            Binding myBinding = new Binding("Dimension");
+            myBinding.Source = _dd;
+
+            mytextboxbind.SetBinding(TextBlock.TextProperty, myBinding);
+
+            //return;
+
+            //var gridsets = CreateStepSettingGrid<BaseAltitudeStepParams>();
+            //SetupPanel.Children.Add(gridsets);
 
             var mapCreator = new MapCreator(150, 150, 1984);
 
@@ -136,11 +169,61 @@ namespace ArcanumIsland.MapViewer
 
                 return resultAltitude.Weight;
             });
-
+            
             baseAltitude.ToBitmap().Save($"baseAltitude_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             tectonicPlate.ToBitmap().Save($"tectonicPlate_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
             resultAltitude.ToBitmap().Save($"resultAltitude_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
         }
+
+        //public void CreateStepStackPanel(object setting) 
+        //{
+        //    var stepStackPanel = new StackPanel();
+
+        //    var stepMainGrid = new Grid();
+        //    var stepSettingGrid = new Grid();
+        //    var stepResultGrid = new StackPanel();
+
+        //    stepStackPanel.Children.Add(stepMainGrid);
+        //    stepStackPanel.Children.Add(stepSettingGrid);
+        //    stepStackPanel.Children.Add(stepResultGrid);
+
+        //}
+
+        //public Grid CreateStepSettingGrid<T>() 
+        //{
+        //    var stepSettingGrid = new Grid();
+
+        //    stepSettingGrid.ColumnDefinitions.Add(new ColumnDefinition());
+        //    stepSettingGrid.ColumnDefinitions.Add(new ColumnDefinition());
+
+        //    Type settingType = typeof(T);
+        //    var properties = settingType.GetProperties();
+
+        //    for (int i = 0; i < properties.Length; i++)
+        //    {
+        //        stepSettingGrid.RowDefinitions.Add(new RowDefinition());
+
+        //        var label = new Label
+        //        {
+        //            Content = properties[i].Name
+        //        };
+
+        //        var texBox = new TextBox();
+
+        //        Grid.SetRow(label, i);
+        //        Grid.SetRow(texBox, i);
+
+        //        Grid.SetColumn(label, 0);
+        //        Grid.SetColumn(texBox, 1);
+
+        //        stepSettingGrid.Children.Add(label);
+        //        stepSettingGrid.Children.Add(texBox);
+        //    }
+
+        //    return stepSettingGrid;
+        //}
+
+
 
         public Bitmap MapToImage(Map map) 
         {
@@ -209,6 +292,11 @@ namespace ArcanumIsland.MapViewer
                 Int32Rect.Empty, 
                 BitmapSizeOptions.FromEmptyOptions()
             );
+        }
+
+        private void mytextboxbind_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var d = _dd;
         }
     }   
 }

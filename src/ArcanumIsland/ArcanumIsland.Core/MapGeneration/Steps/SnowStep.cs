@@ -16,6 +16,8 @@ namespace ArcanumIsland.Core.MapGeneration.Steps
         private PerlinNoiseGenerator _noiseGenerator;
         private SnowStepParams _stepParams;
 
+        public IStepParams StepParams => _stepParams;
+        public string Name { get { return GetType().Name; } }
         public SnowStep(int seed, SnowStepParams stepParams)
         {
             _noiseGenerator = new PerlinNoiseGenerator(seed);

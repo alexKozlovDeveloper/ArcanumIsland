@@ -12,8 +12,31 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Image Name="MainImage"/>
-        <StackPanel Grid.Column="1">
+        <StackPanel x:Name="SetupPanel" Grid.Column="1">
             <Button x:Name="button1" Click="acceptButton_Click" Width="60" Height="30" Background="LightGray" />
+            <TextBox Name="mytextboxbind" TextChanged="mytextboxbind_TextChanged"></TextBox>
+            <StackPanel>
+                <Label>Text</Label>
+                <TextBox x:Name="TextBox1" Width="50">233232</TextBox>
+                <Button x:Name="showres" Width="50">show res 1</Button>
+            </StackPanel>
+            <Grid ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">Text</Label>
+                <TextBox Grid.Column="0" Grid.Row="1" x:Name="TextBox21">233232</TextBox>
+                <Button Grid.Column="1" Grid.Row="1" x:Name="showr2es">show res 1</Button>
+                <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">Text</Label>
+                <TextBox Grid.Column="1" Grid.Row="2" x:Name="TextBox2221"></TextBox>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>
