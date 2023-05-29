@@ -6,20 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Steps.Result
+namespace ArcanumIsland.Core.MapBuildering
 {
-    public class StepResult : IStepResult
+    public class StepResult : IStepBuilderResult
     {
-        public Dictionary<string, Matrix<double>> Matrixes;
+        public Dictionary<string, Matrix<double>> Matrixes { get; private set; }
 
         public StepResult()
         {
             Matrixes = new Dictionary<string, Matrix<double>>();
-        }
-
-        public void AddMatrix(string name, Matrix<double> matrix)
-        {
-            Matrixes.Add(name, matrix);
         }
     }
 }

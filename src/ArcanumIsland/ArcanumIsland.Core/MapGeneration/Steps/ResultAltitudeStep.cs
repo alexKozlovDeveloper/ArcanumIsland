@@ -13,70 +13,70 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps
 {
-    public class ResultAltitudeStep : IStep
-    {
-        private PerlinNoiseGenerator _noiseGenerator;
-        private ResultAltitudeStepParams _stepParams;
+    //public class ResultAltitudeStep : IStep
+    //{
+    //    private PerlinNoiseGenerator _noiseGenerator;
+    //    private ResultAltitudeStepParams _stepParams;
 
-        public IStepParams StepParams => _stepParams;
-        public string Name { get { return GetType().Name; } }
-        public ResultAltitudeStep(int seed, ResultAltitudeStepParams stepParams)
-        {
-            _noiseGenerator = new PerlinNoiseGenerator(seed);
+    //    public IStepParams StepParams => _stepParams;
+    //    public string Name { get { return GetType().Name; } }
+    //    public ResultAltitudeStep(int seed, ResultAltitudeStepParams stepParams)
+    //    {
+    //        _noiseGenerator = new PerlinNoiseGenerator(seed);
 
-            _stepParams = stepParams;
-        }
+    //        _stepParams = stepParams;
+    //    }
 
-        public IStepResult Process(Map map)
-        {
-            var stepResult = new StepResult();
+    //    public IStepResult Process(Map map)
+    //    {
+    //        var stepResult = new StepResult();
 
-            var baseAltitudeMatrix = map.CellsMatrix.Convert(cell =>
-            {
-                var baseAltitude = cell.GetCellContent<BaseAltitude>();
+    //        var baseAltitudeMatrix = map.CellsMatrix.Convert(cell =>
+    //        {
+    //            var baseAltitude = cell.GetCellContent<BaseAltitude>();
 
-                if (baseAltitude == null) { return 0; }
+    //            if (baseAltitude == null) { return 0; }
 
-                return baseAltitude.Weight;
-            });
+    //            return baseAltitude.Weight;
+    //        });
 
-            var tectonicPlateMatrix = map.CellsMatrix.Convert(cell =>
-            {
-                var baseAltitude = cell.GetCellContent<TectonicPlate>();
+    //        var tectonicPlateMatrix = map.CellsMatrix.Convert(cell =>
+    //        {
+    //            var baseAltitude = cell.GetCellContent<TectonicPlate>();
 
-                if (baseAltitude == null) { return 0; }
+    //            if (baseAltitude == null) { return 0; }
 
-                return baseAltitude.PlateCount;
-            });
+    //            return baseAltitude.PlateCount;
+    //        });
 
-            tectonicPlateMatrix.StretchOnMaximumAndMinimumValue(0, 250);
-            tectonicPlateMatrix.Smoothing(3);
+    //        tectonicPlateMatrix.StretchOnMaximumAndMinimumValue(0, 250);
+    //        tectonicPlateMatrix.Smoothing(3);
 
-            var resultAltitudeMatrix = new Matrix<double>(map.CellsMatrix.Size);
+    //        var resultAltitudeMatrix = new Matrix<double>(map.CellsMatrix.Size);
 
-            resultAltitudeMatrix.ForEachItem((x, y) =>
-            {
-                return baseAltitudeMatrix[x, y] + tectonicPlateMatrix[x, y];
-            });
+    //        resultAltitudeMatrix.ForEachItem((x, y) =>
+    //        {
+    //            return baseAltitudeMatrix[x, y] + tectonicPlateMatrix[x, y];
+    //        });
 
-            resultAltitudeMatrix.StretchOnMaximumAndMinimumValue(0, 250);
+    //        resultAltitudeMatrix.StretchOnMaximumAndMinimumValue(0, 250);
 
-            //var altitudeMatrixRaw = _noiseGenerator.GetPerlinNoiseMatrix(_stepParams.Dimension, _stepParams.SmoothingSize);
+    //        //var altitudeMatrixRaw = _noiseGenerator.GetPerlinNoiseMatrix(_stepParams.Dimension, _stepParams.SmoothingSize);
 
-            //var altitudeMatrix = altitudeMatrixRaw.ResizeMatrix(map.Width, map.Height);
+    //        //var altitudeMatrix = altitudeMatrixRaw.ResizeMatrix(map.Width, map.Height);
 
-            map.CellsMatrix.ForEachItem((x, y, cell) =>
-            {
-                var resultAltitude = new ResultAltitude() { Weight = resultAltitudeMatrix[x, y] };
+    //        map.CellsMatrix.ForEachItem((x, y, cell) =>
+    //        {
+    //            var resultAltitude = new ResultAltitude() { Weight = resultAltitudeMatrix[x, y] };
 
-                cell.AddContent(resultAltitude);
+    //            cell.AddContent(resultAltitude);
 
-                return cell;
-            });
+    //            return cell;
+    //        });
 
-            //stepResult.AddMatrix("altitudeMatrix", altitudeMatrix);
+    //        //stepResult.AddMatrix("altitudeMatrix", altitudeMatrix);
 
-            return stepResult;
-        }
-    }
+    //        return stepResult;
+    //    }
+    //}
 }

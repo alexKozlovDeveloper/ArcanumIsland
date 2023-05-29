@@ -10,6 +10,9 @@ using MathBase.Points;
 using PerlinNoise;
 using MathBase.MultidimensionalArrays.Matrixes;
 using ArcanumIsland.Core.Additionals;
+using ArcanumIsland.Core.MapBuildering;
+using ArcanumIsland.Core.Storing;
+using ArcanumIsland.Core.Storing.Models;
 
 namespace ArcanumIsland.ConsoleApp
 {
@@ -21,97 +24,136 @@ namespace ArcanumIsland.ConsoleApp
 
             logger.Info("ArcanumIsland.ConsoleApp: Starting...");
 
-            var random = new Random(2001);
+            MakeMap(707);
 
+            return;
 
-            var perlin = new PerlinNoiseGenerator();
-
-            var matrix1 = perlin.GetPerlinNoiseMatrix(512, 2);
-            var matrix2 = matrix1.Copy();
-            matrix2.RadialDecrease(0.8);
-
-            var img1 = matrix1.ToBitmap();
-            var img2 = matrix2.ToBitmap();
-
-            img1.Save($"perlinOrig_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-            img2.Save($"radiant_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-
-            var ff1 = perlin.GetPerlinNoiseMatrix(32, 2);
-            var ff1img1 = ff1.ToBitmap();
-            ff1img1.Save($"perlin32_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-
-            var ff2 = ff1.ResizeMatrix(500, 500);
-            var ff3 = ff2.ToInt();
-            var ff2img1 = ff3.ToBitmap();
-            ff2img1.Save($"perlin32_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-            //return;
-
-            var areasCreator = new AreasCreator(2001, 250, 250);
-
-            areasCreator.CreateAreas(5);
-
-            areasCreator.FillAreas();
-
-            var matrix = areasCreator.GetMatrix();
-
-            var movedMatrix = areasCreator.MoveAreas(25);
-
-            var c = movedMatrix.Convert(a => 
-            {
-                if (string.IsNullOrEmpty(a)) { return 0; }
-
-                var parts = a.Split('-');
-                return parts.Length;
-            });
-
-            var d = matrix.Convert(a => int.Parse(a.Replace("area_", "")));
-
-            var d1 = d.Copy();
-            d1.StretchOnMaximumAndMinimumValue(0, 250);
-            //var d2 = d1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var img = d1.ToBitmap();
-            img.Save($"areas_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-
-
-            var c1 = c.Copy();
-            c1.StretchOnMaximumAndMinimumValue(0, 250);
-            //var c2 = c1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
-            var cimg = c1.ToBitmap();
-            cimg.Save($"areasMoved_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-
-
-            var smth = c1.Copy();
-            smth.Smoothing(13);
-
-            var smthimg = smth.ToBitmap();
-            smthimg.Save($"areasMovedSmoothing_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-
-            //var d1 = Vector2Extensions.BringValueToRange(10, 10);
-            //var d2 = Vector2Extensions.BringValueToRange(-1, 10);
-            //var d3 = Vector2Extensions.BringValueToRange(0, 10);
-            //var d4 = Vector2Extensions.BringValueToRange(9, 10);
-            //var d5 = Vector2Extensions.BringValueToRange(5, 10);
+            //var random = new Random(2001);
 
 
             //var perlin = new PerlinNoiseGenerator();
 
-            var pp1 = perlin.GetPerlinNoiseMatrix(256, 2);
+            //var matrix1 = perlin.GetPerlinNoiseMatrix(512, 2);
+            //var matrix2 = matrix1.Copy();
+            //matrix2.RadialDecrease(0.8);
 
-            var pp2M = pp1.ResizeMatrix(500, 800);
+            //var img1 = matrix1.ToBitmap();
+            //var img2 = matrix2.ToBitmap();
 
-            var pp1img = pp1.ToBitmap();
-            var pp2img = pp2M.ToInt().ToBitmap();
+            //img1.Save($"perlinOrig_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            //img2.Save($"radiant_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
-            pp1img.Save($"src1_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
-            pp2img.Save($"src1_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            //var ff1 = perlin.GetPerlinNoiseMatrix(32, 2);
+            //var ff1img1 = ff1.ToBitmap();
+            //ff1img1.Save($"perlin32_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
 
-            //var mapCreator = new MapCreator();
+            //var ff2 = ff1.ResizeMatrix(500, 500);
+            //var ff3 = ff2.ToInt();
+            //var ff2img1 = ff3.ToBitmap();
+            //ff2img1.Save($"perlin32_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            ////return;
 
-            //mapCreator.CreateMap();
+            //var areasCreator = new AreasCreator(2001, 250, 250);
 
-            //var stepResult = mapCreator.ProcessStep(new AltitudeStep());
+            //areasCreator.CreateAreas(5);
 
-            logger.Info("ArcanumIsland.ConsoleApp: Ending...");
+            //areasCreator.FillAreas();
+
+            //var matrix = areasCreator.GetMatrix();
+
+            //var movedMatrix = areasCreator.MoveAreas(25);
+
+            //var c = movedMatrix.Convert(a => 
+            //{
+            //    if (string.IsNullOrEmpty(a)) { return 0; }
+
+            //    var parts = a.Split('-');
+            //    return parts.Length;
+            //});
+
+            //var d = matrix.Convert(a => int.Parse(a.Replace("area_", "")));
+
+            //var d1 = d.Copy();
+            //d1.StretchOnMaximumAndMinimumValue(0, 250);
+            ////var d2 = d1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
+            //var img = d1.ToBitmap();
+            //img.Save($"areas_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+
+            //var c1 = c.Copy();
+            //c1.StretchOnMaximumAndMinimumValue(0, 250);
+            ////var c2 = c1.ResizeMatrix(1000, 1000).Convert(a => (int)a);
+            //var cimg = c1.ToBitmap();
+            //cimg.Save($"areasMoved_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+
+            //var smth = c1.Copy();
+            //smth.Smoothing(13);
+
+            //var smthimg = smth.ToBitmap();
+            //smthimg.Save($"areasMovedSmoothing_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+            ////var d1 = Vector2Extensions.BringValueToRange(10, 10);
+            ////var d2 = Vector2Extensions.BringValueToRange(-1, 10);
+            ////var d3 = Vector2Extensions.BringValueToRange(0, 10);
+            ////var d4 = Vector2Extensions.BringValueToRange(9, 10);
+            ////var d5 = Vector2Extensions.BringValueToRange(5, 10);
+
+
+            ////var perlin = new PerlinNoiseGenerator();
+
+            //var pp1 = perlin.GetPerlinNoiseMatrix(256, 2);
+
+            //var pp2M = pp1.ResizeMatrix(500, 800);
+
+            //var pp1img = pp1.ToBitmap();
+            //var pp2img = pp2M.ToInt().ToBitmap();
+
+            //pp1img.Save($"src1_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+            //pp2img.Save($"src1_scaled_{DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'_'mm'_'ss")}.png");
+
+            ////var mapCreator = new MapCreator();
+
+            ////mapCreator.CreateMap();
+
+            ////var stepResult = mapCreator.ProcessStep(new AltitudeStep());
+
+            //logger.Info("ArcanumIsland.ConsoleApp: Ending...");
+        }
+
+        public static void MakeMap(int seed)
+        {
+            var director = new MapBuilderingDirector(100, 100);
+            var stepFactory = new StepBuilderFactory(seed);
+
+            var altitudeStep = stepFactory.CreateAltitudeStepBuilder(256, 2);
+
+            var altitudeStepResult = director.ApplyStepBuilder(altitudeStep);
+
+            var map = director.GetMap() as Map;
+
+            var mapStoreModel = new MapStoreModel(map);
+
+            //mapStoreModel.SerializeModelToFile(@"D:\ArcanumIsland\Models\test_map.json");
+            //var m = ModelStoring.DeserializeModelFromFile<Map>(@"D:\ArcanumIsland\Models\test_map.json");
+            //mapStoreModel.SaveAsJson(@"D:\ArcanumIsland\Models\test_map.json");
+
+            //var d = ModelStoring.LoadFromJson<MapStoreModel>(@"D:\ArcanumIsland\Models\test_map_[2023-05-29]_(12-07-51).json");
+
+
+            ModelStoringExtensions.SerializeModelToXml(mapStoreModel, @"D:\ArcanumIsland\Models\test_xml_map.xml");
+
+
+
+
+
+            var c = ModelStoringExtensions.DeserializeModelFromXml<MapStoreModel>(@"D:\ArcanumIsland\Models\test_xml_map.xml");
+
+            var m = c.GetAsMap();
+
+            var mapStoreModel2 = new MapStoreModel(m);
+
+            ModelStoringExtensions.SerializeModelToXml(mapStoreModel2, @"D:\ArcanumIsland\Models\test_xml_map2.xml");
         }
 
         //private static Bitmap GetImage(int[][] matrix)

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
 {
-    public class BaseAltitude : ICellLayer
+    public class Altitude : ICellLayer
     {
-        public double Weight { get; set; }
+        public double Value { get; set; }
 
-        public BaseAltitude(double weight)
+        public Altitude() { }
+
+        public Altitude(double value)
         {
-            Weight = weight;
-        }
+            Value = value;
+        }        
     }
 }

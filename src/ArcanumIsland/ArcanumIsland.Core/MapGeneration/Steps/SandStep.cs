@@ -11,42 +11,42 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps
 {
-    public class SandStep : IStep
-    {
-        private PerlinNoiseGenerator _noiseGenerator;
-        private SandStepParams _stepParams;
+    //public class SandStep : IStep
+    //{
+    //    private PerlinNoiseGenerator _noiseGenerator;
+    //    private SandStepParams _stepParams;
 
-        public IStepParams StepParams => _stepParams;
-        public string Name { get { return GetType().Name; } }
-        public SandStep(int seed, SandStepParams stepParams)
-        {
-            _noiseGenerator = new PerlinNoiseGenerator(seed);
+    //    public IStepParams StepParams => _stepParams;
+    //    public string Name { get { return GetType().Name; } }
+    //    public SandStep(int seed, SandStepParams stepParams)
+    //    {
+    //        _noiseGenerator = new PerlinNoiseGenerator(seed);
 
-            _stepParams = stepParams;
-        }
+    //        _stepParams = stepParams;
+    //    }
 
-        public IStepResult Process(Map map)
-        {
-            var stepResult = new StepResult();
+    //    public IStepResult Process(Map map)
+    //    {
+    //        var stepResult = new StepResult();
 
-            map.CellsMatrix.ForEachItem((x, y, cell) =>
-            {
-                var altitude = cell.GetCellContent<BaseAltitude>();
-                var ocean = cell.GetCellContent<Ocean>();
+    //        map.CellsMatrix.ForEachItem((x, y, cell) =>
+    //        {
+    //            var altitude = cell.GetCellContent<BaseAltitude>();
+    //            var ocean = cell.GetCellContent<Ocean>();
 
-                if (altitude == null) { return cell; }
-                if (ocean != null) { return cell; }
+    //            if (altitude == null) { return cell; }
+    //            if (ocean != null) { return cell; }
 
-                if (altitude.Weight >= _stepParams.BottomEdge && altitude.Weight < _stepParams.TopEdge)
-                {
-                    var sand = new Sand();
-                    cell.AddContent(sand);
-                }
+    //            if (altitude.Weight >= _stepParams.BottomEdge && altitude.Weight < _stepParams.TopEdge)
+    //            {
+    //                var sand = new Sand();
+    //                cell.AddContent(sand);
+    //            }
 
-                return cell;
-            });
+    //            return cell;
+    //        });
 
-            return stepResult;
-        }
-    }
+    //        return stepResult;
+    //    }
+    //}
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
 {
-    public class ResultAltitude : ICellLayer
+    public interface ICellLayer
     {
-        public double Weight { get; set; }
+
     }
 }

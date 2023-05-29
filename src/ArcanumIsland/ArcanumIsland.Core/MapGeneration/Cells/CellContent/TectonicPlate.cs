@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
 {
-    public class TectonicPlate : ICellContent
+    public class TectonicPlate : ICellLayer
     {
         public double PlateCount { get; set; }
     }

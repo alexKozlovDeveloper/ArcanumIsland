@@ -336,7 +336,7 @@ namespace MathBase.MultidimensionalArrays.Matrixes
             return result;
         }
 
-        public static Matrix<double> ResizeMatrix(this Matrix<int> matrix, int newWidth, int newHeight)
+        public static Matrix<double> ResizeMatrix(this Matrix<double> matrix, int newWidth, int newHeight)
         {
             double widthStepSize = (double)matrix.Width / (double)newWidth;
             double heightStepSize = (double)matrix.Height / (double)newHeight;

@@ -7,34 +7,34 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Cells
 {
-    public class Cell
+    public class Cell : ICell
     {
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        public List<ICellContent> CellContents { get; private set; }
+        public IList<ICellLayer> CellLayers { get; private set; }
 
         public Cell(int x, int y)
         {
             X = x;
             Y = y;
 
-            CellContents = new List<ICellContent>();
+            CellLayers = new List<ICellLayer>();
         }
 
-        public void AddContent(ICellContent content)
+        public void AddLayer(ICellLayer layer)
         {
-            CellContents.Add(content);
+            CellLayers.Add(layer);
         }
 
-        public T GetCellContent<T>() 
+        public T GetLayer<T>() 
         {
-            return (T)CellContents.FirstOrDefault(a => a.GetType() == typeof(T));
+            return (T)CellLayers.FirstOrDefault(a => a.GetType() == typeof(T));
         }
 
-        public bool IsContainCellContent<T>()
+        public bool IsContainLayer<T>()
         {
-            if (GetCellContent<T>() != null) 
+            if (GetLayer<T>() != null) 
             {
                 return true; 
             }

@@ -11,40 +11,40 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps
 {
-    public class OceanStep : IStep
-    {
-        private PerlinNoiseGenerator _noiseGenerator;
-        private OceanStepParams _stepParams;
+    //public class OceanStep : IStep
+    //{
+    //    private PerlinNoiseGenerator _noiseGenerator;
+    //    private OceanStepParams _stepParams;
 
-        public IStepParams StepParams => _stepParams;
-        public string Name { get { return GetType().Name; } }
-        public OceanStep(int seed, OceanStepParams stepParams)
-        {
-            _noiseGenerator = new PerlinNoiseGenerator(seed);
+    //    public IStepParams StepParams => _stepParams;
+    //    public string Name { get { return GetType().Name; } }
+    //    public OceanStep(int seed, OceanStepParams stepParams)
+    //    {
+    //        _noiseGenerator = new PerlinNoiseGenerator(seed);
 
-            _stepParams = stepParams;
-        }
+    //        _stepParams = stepParams;
+    //    }
 
-        public IStepResult Process(Map map)
-        {
-            var stepResult = new StepResult();
+    //    public IStepResult Process(Map map)
+    //    {
+    //        var stepResult = new StepResult();
 
-            map.CellsMatrix.ForEachItem((x, y, cell) =>
-            {
-                var altitude = cell.GetCellContent<BaseAltitude>();
+    //        map.CellsMatrix.ForEachItem((x, y, cell) =>
+    //        {
+    //            var altitude = cell.GetCellContent<BaseAltitude>();
 
-                if (altitude == null) { return cell; }
+    //            if (altitude == null) { return cell; }
 
-                if (altitude.Weight < _stepParams.SeaLevel) 
-                {
-                    var ocean = new Ocean();
-                    cell.AddContent(ocean);
-                }
+    //            if (altitude.Weight < _stepParams.SeaLevel) 
+    //            {
+    //                var ocean = new Ocean();
+    //                cell.AddContent(ocean);
+    //            }
 
-                return cell;
-            });
+    //            return cell;
+    //        });
 
-            return stepResult;
-        }
-    }
+    //        return stepResult;
+    //    }
+    //}
 }

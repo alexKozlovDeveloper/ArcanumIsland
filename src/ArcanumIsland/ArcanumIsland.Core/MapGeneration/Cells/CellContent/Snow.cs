@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
 {
-    public class Snow : ICellContent
+    public class Snow : ICellLayer
     {
 
     }
