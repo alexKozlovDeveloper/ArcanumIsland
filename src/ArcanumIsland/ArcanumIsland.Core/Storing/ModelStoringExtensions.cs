@@ -1,4 +1,4 @@
-﻿using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
+﻿using ArcanumIsland.Core.Interfaces;
 using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
@@ -83,11 +83,11 @@ namespace ArcanumIsland.Core.Storing
 
         public static Type[] FindCellLayerTypes()
         {
-            var typesInNamespace = Assembly.GetAssembly(typeof(ICellLayer))
+            var typesInNamespace = Assembly.GetAssembly(typeof(ILayer))
                 .GetTypes()
                 .Where(t => String.Equals(t.Namespace, "ArcanumIsland.Core.MapGeneration.Cells.CellContent", StringComparison.Ordinal));
 
-            var cellLayerTypes = typesInNamespace.Where(t => typeof(ICellLayer).IsAssignableFrom(t)).ToArray();
+            var cellLayerTypes = typesInNamespace.Where(t => typeof(ILayer).IsAssignableFrom(t)).ToArray();
 
             return cellLayerTypes;
         }

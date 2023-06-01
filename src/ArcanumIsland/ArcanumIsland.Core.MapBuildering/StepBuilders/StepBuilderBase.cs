@@ -1,21 +1,21 @@
-﻿using System;
+﻿using ArcanumIsland.Core.Interfaces;
+using ArcanumIsland.Core.MapBuildering.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapBuildering
+namespace ArcanumIsland.Core.MapBuildering.StepBuilders
 {
     public abstract class StepBuilderBase<TParameters, TResult>
-        where TParameters : IStepBuilderParams
+        where TParameters : IStepBuilderParam
         where TResult : IStepBuilderResult
     {
         protected readonly TParameters _stepParams;
-        protected readonly int _seed;
 
-        public StepBuilderBase(int seed, TParameters stepParams)
+        public StepBuilderBase(TParameters stepParams)
         {
-            _seed = seed;
             _stepParams = stepParams;
         }
 

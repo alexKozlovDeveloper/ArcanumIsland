@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArcanumIsland.Core.Interfaces;
 
-namespace ArcanumIsland.Core.MapBuildering
+namespace ArcanumIsland.Core.Models.Layers
 {
-    public interface IStepBuilderParams
+    public class Sand : ILayer
     {
+
     }
 }

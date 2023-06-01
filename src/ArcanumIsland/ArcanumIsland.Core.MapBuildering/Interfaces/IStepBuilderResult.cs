@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapBuildering
+namespace ArcanumIsland.Core.MapBuildering.Interfaces
 {
     public interface IStepBuilderResult
     {

@@ -1,5 +1,4 @@
-﻿using ArcanumIsland.Core.MapBuildering;
-using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
+﻿using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
 using ArcanumIsland.Core.MapGeneration.Steps.Interfaces;
 using ArcanumIsland.Core.MapGeneration.Steps.Param;
 using ArcanumIsland.Core.MapGeneration.Steps.Result;

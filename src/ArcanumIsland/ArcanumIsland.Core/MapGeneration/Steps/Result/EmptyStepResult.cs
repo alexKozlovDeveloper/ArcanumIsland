@@ -7,7 +7,7 @@ using ArcanumIsland.Core.MapGeneration.Steps.Interfaces;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Result
 {
-    public class EmptyStepResult : IStepResult
-    {
-    }
+    //public class EmptyStepResult : IStepBuilderParam
+    //{
+    //}
 }

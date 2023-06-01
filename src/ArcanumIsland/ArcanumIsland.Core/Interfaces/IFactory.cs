@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
+namespace ArcanumIsland.Core.Interfaces
 {
-    public interface ICellLayer
+    public interface IFactory<T>
     {
-
+        T Create();
     }
 }

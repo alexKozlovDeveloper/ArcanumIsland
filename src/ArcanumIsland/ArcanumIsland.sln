@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AreasCreating", "AreasCreat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathBase", "MathBase\MathBase.csproj", "{04CA0E87-3DEB-455B-A901-0B7260C83854}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcanumIsland.Core.MapBuildering", "ArcanumIsland.Core.MapBuildering\ArcanumIsland.Core.MapBuildering.csproj", "{93C14605-1971-4559-AF2F-41954DC9090E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{04CA0E87-3DEB-455B-A901-0B7260C83854}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04CA0E87-3DEB-455B-A901-0B7260C83854}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04CA0E87-3DEB-455B-A901-0B7260C83854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C14605-1971-4559-AF2F-41954DC9090E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C14605-1971-4559-AF2F-41954DC9090E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C14605-1971-4559-AF2F-41954DC9090E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C14605-1971-4559-AF2F-41954DC9090E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

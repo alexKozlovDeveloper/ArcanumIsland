@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Param
 {
-    public class GrassStepParams : IStepParams
-    {
-        public int BottomEdge { get; set; }
-        public int TopEdge { get; set; }
-    }
+    //public class GrassStepParams : IStepBuilderParam
+    //{
+    //    public int BottomEdge { get; set; }
+    //    public int TopEdge { get; set; }
+    //}
 }

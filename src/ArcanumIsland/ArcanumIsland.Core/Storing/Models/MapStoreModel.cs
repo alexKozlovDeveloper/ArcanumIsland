@@ -6,7 +6,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using MathBase.MultidimensionalArrays.Matrixes;
-using ArcanumIsland.Core.MapBuildering;
+using ArcanumIsland.Core.Interfaces;
+using ArcanumIsland.Core.Models;
 
 namespace ArcanumIsland.Core.Storing.Models
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Interfaces
 {
-    public interface IStepParams
-    {
-    }
+    //public interface IStepParams
+    //{
+    //}
 }

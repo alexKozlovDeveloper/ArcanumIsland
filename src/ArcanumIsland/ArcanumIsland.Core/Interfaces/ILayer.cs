@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
+namespace ArcanumIsland.Core.Interfaces
 {
-    public class Snow : ICellLayer
+    public interface ILayer
     {
 
     }

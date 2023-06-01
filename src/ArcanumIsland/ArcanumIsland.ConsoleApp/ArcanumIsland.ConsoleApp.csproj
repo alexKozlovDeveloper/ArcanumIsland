@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ArcanumIsland.Core.MapBuildering\ArcanumIsland.Core.MapBuildering.csproj" />
     <ProjectReference Include="..\ArcanumIsland.Core\ArcanumIsland.Core.csproj" />
     <ProjectReference Include="..\AreasCreating\AreasCreating.csproj" />
     <ProjectReference Include="..\MathBase\MathBase.csproj" />

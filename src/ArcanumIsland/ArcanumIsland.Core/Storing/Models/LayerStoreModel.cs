@@ -1,4 +1,4 @@
-﻿using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
+﻿using ArcanumIsland.Core.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.Storing.Models
 {
-    public class CellLayerStoreModel
+    public class LayerStoreModel
     {
         public string Name { get; set; }
 
         public string Json { get; set; }
 
-        public CellLayerStoreModel() { }
+        public LayerStoreModel() { }
 
-        public CellLayerStoreModel(ICellLayer layer) 
+        public LayerStoreModel(ILayer layer) 
         {
             var type = layer.GetType();
             Name = type.Name;
@@ -25,13 +25,13 @@ namespace ArcanumIsland.Core.Storing.Models
             Json = JsonConvert.SerializeObject(layer);
         }
 
-        public ICellLayer GetAsCellLayer() 
+        public ILayer GetAsCellLayer() 
         {
             var dict = ModelStoringExtensions.FindCellLayerTypes().ToDictionary(a => a.Name, a => a);
 
             if (dict.ContainsKey(Name)) 
             {
-                var layer = JsonConvert.DeserializeObject(Json, dict[Name]) as ICellLayer;
+                var layer = JsonConvert.DeserializeObject(Json, dict[Name]) as ILayer;
 
                 return layer;
             }

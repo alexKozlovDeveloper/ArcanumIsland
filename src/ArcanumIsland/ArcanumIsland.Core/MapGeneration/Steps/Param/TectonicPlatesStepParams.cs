@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Param
 {
-    public class TectonicPlatesStepParams : IStepParams
-    {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int AreasCount { get; set; }
-        public int SmoothingSize { get; set; }
-    }
+    //public class TectonicPlatesStepParams : IStepBuilderParam
+    //{
+    //    public int Width { get; set; }
+    //    public int Height { get; set; }
+    //    public int AreasCount { get; set; }
+    //    public int SmoothingSize { get; set; }
+    //}
 }

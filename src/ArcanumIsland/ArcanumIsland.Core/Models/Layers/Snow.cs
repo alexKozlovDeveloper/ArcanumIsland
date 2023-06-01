@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArcanumIsland.Core.Interfaces;
 
-namespace ArcanumIsland.Core.MapGeneration.Cells.CellContent
+namespace ArcanumIsland.Core.Models.Layers
 {
-    public class Ocean : ICellLayer
+    public class Snow : ILayer
     {
+
     }
 }

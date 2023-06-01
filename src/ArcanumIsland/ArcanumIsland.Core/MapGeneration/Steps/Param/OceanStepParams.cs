@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Param
 {
-    public class OceanStepParams : IStepParams
-    {
-        public int SeaLevel { get; set; }
-    }
+    //public class OceanStepParams : IStepBuilderParam
+    //{
+    //    public int SeaLevel { get; set; }
+    //}
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ArcanumIsland.Core.MapGeneration.Steps.Param
 {
-    public class ResultAltitudeStepParams : IStepParams
-    {
-    }
+    //public class ResultAltitudeStepParams : IStepBuilderParam
+    //{
+    //}
 }

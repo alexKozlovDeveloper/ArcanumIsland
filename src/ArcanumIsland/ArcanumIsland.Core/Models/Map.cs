@@ -1,4 +1,4 @@
-﻿using ArcanumIsland.Core.MapGeneration.Cells;
+﻿using ArcanumIsland.Core.Interfaces;
 using MathBase.MultidimensionalArrays.Matrixes;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcanumIsland.Core.MapBuildering
+namespace ArcanumIsland.Core.Models
 {
     public class Map : IMap
     {
@@ -20,6 +20,11 @@ namespace ArcanumIsland.Core.MapBuildering
             CellsMatrix = new Matrix<Cell>(width, height);
 
             CellsMatrix.ForEachItem((x, y) => new Cell(x, y));
+        }
+
+        public Matrix<L> GetLayerMatrix<L>() where L : ILayer
+        {
+            return CellsMatrix.Convert(a => a.GetLayer<L>());
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using ArcanumIsland.Core.MapGeneration.Cells;
-using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
+﻿using ArcanumIsland.Core.Interfaces;
+using ArcanumIsland.Core.Models.Layers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace ArcanumIsland.Core.Storing.Models
         public int X { get; set; }
         public int Y { get; set; }
 
-        public CellLayerStoreModel[] CellLayers { get; set; }
+        public LayerStoreModel[] CellLayers { get; set; }
 
         public CellStoreModel() { }
 
@@ -24,11 +24,11 @@ namespace ArcanumIsland.Core.Storing.Models
             X = cell.X;
             Y = cell.Y;
 
-            CellLayers = new CellLayerStoreModel[cell.CellLayers.Count];
+            CellLayers = new LayerStoreModel[cell.CellLayers.Count];
 
             for (int i = 0; i < cell.CellLayers.Count; i++)
             {
-                CellLayers[i] = new CellLayerStoreModel(cell.CellLayers[i]);
+                CellLayers[i] = new LayerStoreModel(cell.CellLayers[i]);
             }
         }
     }

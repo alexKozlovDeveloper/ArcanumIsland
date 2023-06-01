@@ -3,8 +3,6 @@ using System.Drawing.Drawing2D;
 using System.Reflection;
 using ArcanumIsland.Core;
 using ArcanumIsland.Core.Logging;
-using ArcanumIsland.Core.MapGeneration;
-using ArcanumIsland.Core.MapGeneration.Steps;
 using AreasCreating;
 using MathBase.Points;
 using PerlinNoise;
@@ -13,6 +11,11 @@ using ArcanumIsland.Core.Additionals;
 using ArcanumIsland.Core.MapBuildering;
 using ArcanumIsland.Core.Storing;
 using ArcanumIsland.Core.Storing.Models;
+using ArcanumIsland.Core.Models;
+using ArcanumIsland.Core.Models.Layers;
+using ArcanumIsland.Core.MapBuildering.Factoryes;
+using ArcanumIsland.Core.MapBuildering.Models.Params;
+using ArcanumIsland.Core.Interfaces;
 
 namespace ArcanumIsland.ConsoleApp
 {
@@ -123,12 +126,34 @@ namespace ArcanumIsland.ConsoleApp
 
         public static void MakeMap(int seed)
         {
-            var director = new MapBuilderingDirector(100, 100);
-            var stepFactory = new StepBuilderFactory(seed);
+            var waterEdge = 100;
+            var sandAltitudeRange = 15;
+            var grassAltitudeRange = 120;
+            var iceAltitudeRange = 21;
 
-            var altitudeStep = stepFactory.CreateAltitudeStepBuilder(256, 2);
+
+            var director = new MapBuilderingDirector(150, 150);
+            var stepFactory = new StepBuilderFactory();
+
+            var altitudeStep = stepFactory.CreateAltitudeStepBuilder(GetAltitudeStepBuilderParam(seed));
+
+            var altitudeRadialDecreaseStep = stepFactory.CreateAltitudeRadialDecreaseStepBuilder(GetAltitudeRadialDecreaseStepBuilderParam());
+
+            var addOceanStep = stepFactory.CreateAddLayerStepBuilder(GetAddOceanLayerStepBuilderParam(waterEdge));
+            
+            var addSandStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Sand>(waterEdge - sandAltitudeRange, waterEdge + sandAltitudeRange));
+            var addGrassStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Grass>(waterEdge + sandAltitudeRange, waterEdge + sandAltitudeRange + grassAltitudeRange));
+            var addSnowStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Snow>(waterEdge + sandAltitudeRange + grassAltitudeRange, waterEdge + sandAltitudeRange + grassAltitudeRange + iceAltitudeRange));
 
             var altitudeStepResult = director.ApplyStepBuilder(altitudeStep);
+
+            //var altitudeRadialDecreaseStepResult = director.ApplyStepBuilder(altitudeRadialDecreaseStep);
+
+            var addOceanStepResult = director.ApplyStepBuilder(addOceanStep);
+
+            var addSandStepResult = director.ApplyStepBuilder(addSandStep);
+            var addGrassStepResult = director.ApplyStepBuilder(addGrassStep);
+            var addIceStepResult = director.ApplyStepBuilder(addSnowStep);
 
             var map = director.GetMap() as Map;
 
@@ -149,11 +174,75 @@ namespace ArcanumIsland.ConsoleApp
 
             var c = ModelStoringExtensions.DeserializeModelFromXml<MapStoreModel>(@"D:\ArcanumIsland\Models\test_xml_map.xml");
 
-            var m = c.GetAsMap();
+            //var m = c.GetAsMap();
 
-            var mapStoreModel2 = new MapStoreModel(m);
+            //var mapStoreModel2 = new MapStoreModel(m);
 
-            ModelStoringExtensions.SerializeModelToXml(mapStoreModel2, @"D:\ArcanumIsland\Models\test_xml_map2.xml");
+            //ModelStoringExtensions.SerializeModelToXml(mapStoreModel2, @"D:\ArcanumIsland\Models\test_xml_map2.xml");
+        }
+
+        private static AltitudeStepBuilderParam GetAltitudeStepBuilderParam(int seed) 
+        {
+            return new AltitudeStepBuilderParam
+            {
+                Seed = seed,
+                Dimension = 256,
+                SmoothingSize = 2
+            };
+        }
+
+        private static AltitudeRadialDecreaseStepBuilderParam GetAltitudeRadialDecreaseStepBuilderParam()
+        {
+            return new AltitudeRadialDecreaseStepBuilderParam
+            {
+                Speed = 2
+            };
+        }
+
+        private static AddLayerStepBuilderParam<L> GetAddLayerStepBuilderParam<L>(int bottomEdge, int topEdge) where L : ILayer, new()
+        {
+            return new AddLayerStepBuilderParam<L>
+            {
+                LayerFactory = new LayerFactory<L>(),
+                AddCondition = a => 
+                {
+                    var altitude = a.GetLayer<Altitude>();
+
+                    if (altitude == null) { return false; }
+
+                    if (altitude.Value >= bottomEdge && altitude.Value < topEdge)
+                    {
+                        return true;
+                    }
+                    else 
+                    {
+                        return false;
+                    }                    
+                }
+            };
+        }
+
+        private static AddLayerStepBuilderParam<Ocean> GetAddOceanLayerStepBuilderParam(int oceanAltitude)
+        {
+            return new AddLayerStepBuilderParam<Ocean>
+            {
+                LayerFactory = new OceanFactory(oceanAltitude),
+                AddCondition = a =>
+                {
+                    var altitude = a.GetLayer<Altitude>();
+
+                    if (altitude == null) { return false; }
+
+                    if (altitude.Value < oceanAltitude)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            };
         }
 
         //private static Bitmap GetImage(int[][] matrix)

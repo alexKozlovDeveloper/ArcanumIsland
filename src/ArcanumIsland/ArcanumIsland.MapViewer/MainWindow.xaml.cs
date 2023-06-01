@@ -1,8 +1,4 @@
-﻿using ArcanumIsland.Core.MapGeneration;
-using ArcanumIsland.Core.MapGeneration.Cells.CellContent;
-using ArcanumIsland.Core.MapGeneration.Steps;
-using ArcanumIsland.Core.MapGeneration.Steps.Param;
-using MathBase.MultidimensionalArrays.Matrixes;
+﻿using MathBase.MultidimensionalArrays.Matrixes;
 using ArcanumIsland.Core.Additionals;
 using PerlinNoise;
 using System;
@@ -25,7 +21,6 @@ using System.Windows.Interop;
 using System.ComponentModel.Design;
 using System.Reflection;
 using System.Windows.Media.Animation;
-using ArcanumIsland.Core.MapBuildering;
 
 namespace ArcanumIsland.MapViewer
 {
@@ -35,7 +30,7 @@ namespace ArcanumIsland.MapViewer
     public partial class MainWindow : Window
     {
         private Random _rnd;
-        private BaseAltitudeStepParams _dd;
+        //private BaseAltitudeStepParams _dd;
 
         public MainWindow()
         {
@@ -45,7 +40,7 @@ namespace ArcanumIsland.MapViewer
 
 
 
-            var controller = new MapCreatingController(MainImage, SetupPanel);
+           // var controller = new MapCreatingController(MainImage, SetupPanel);
 
 
             //controller.AddStep(new BaseAltitudeStep(696, new BaseAltitudeStepParams
@@ -70,23 +65,23 @@ namespace ArcanumIsland.MapViewer
             //var newRexX = 500;
             //var newRexY = 300;
 
-            _dd = new BaseAltitudeStepParams
-            {
-                Dimension = 256,
-                SmoothingSize = 2,
-            };
+            //_dd = new BaseAltitudeStepParams
+            //{
+            //    Dimension = 256,
+            //    SmoothingSize = 2,
+            //};
 
-            Binding myBinding = new Binding("Dimension");
-            myBinding.Source = _dd;
+            //Binding myBinding = new Binding("Dimension");
+            //myBinding.Source = _dd;
 
-            mytextboxbind.SetBinding(TextBlock.TextProperty, myBinding);
+            //mytextboxbind.SetBinding(TextBlock.TextProperty, myBinding);
 
             //return;
 
             //var gridsets = CreateStepSettingGrid<BaseAltitudeStepParams>();
             //SetupPanel.Children.Add(gridsets);
 
-            var mapCreator = new MapCreator(150, 150, 1984);
+            //var mapCreator = new MapCreator(150, 150, 1984);
 
             //var baseAltitudeResult = mapCreator.AddBaseAltitude(new BaseAltitudeStepParams
             //{
@@ -129,7 +124,7 @@ namespace ArcanumIsland.MapViewer
             //    TopEdge = 250,
             //});
 
-            var map = mapCreator.GetMap();
+            //var map = mapCreator.GetMap();
 
             //var bitmap = MapToImage(map);
 
@@ -297,7 +292,7 @@ namespace ArcanumIsland.MapViewer
 
         private void mytextboxbind_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var d = _dd;
+            //var d = _dd;
         }
     }   
 }
