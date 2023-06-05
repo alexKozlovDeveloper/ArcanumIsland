@@ -27,7 +27,8 @@ namespace ArcanumIsland.ConsoleApp
 
             logger.Info("ArcanumIsland.ConsoleApp: Starting...");
 
-            MakeMap(707);
+            //MakeMap(707);
+            MakeTestMap(707);
 
             return;
 
@@ -124,15 +125,38 @@ namespace ArcanumIsland.ConsoleApp
             //logger.Info("ArcanumIsland.ConsoleApp: Ending...");
         }
 
+        public static void MakeTestMap(int seed)
+        {
+            var width = 50;
+            var height = 50;
+
+            var director = new MapBuilderingDirector(width, height);
+            var stepFactory = new StepBuilderFactory();
+
+            var altitudeStep = stepFactory.CreateAltitudeStepBuilder(GetAltitudeStepBuilderParam(seed));
+
+            var testStep = stepFactory.CreateAddLayerStepBuilder(GetTestMapStepBuilderParam<Grass>(width, height));
+
+            director.ApplyStepBuilder(altitudeStep);
+
+            director.ApplyStepBuilder(testStep);
+
+            var map = director.GetMap() as Map;
+
+            var mapStoreModel = new MapStoreModel(map);
+
+            ModelStoringExtensions.SerializeModelToXml(mapStoreModel, @"D:\ArcanumIsland\Models\for_test_xml_map.xml");
+        }
+
         public static void MakeMap(int seed)
         {
             var waterEdge = 100;
             var sandAltitudeRange = 15;
-            var grassAltitudeRange = 120;
-            var iceAltitudeRange = 21;
+            var grassAltitudeRange = 85;
+            //var iceAltitudeRange = 21;
 
 
-            var director = new MapBuilderingDirector(150, 150);
+            var director = new MapBuilderingDirector(25, 25);
             var stepFactory = new StepBuilderFactory();
 
             var altitudeStep = stepFactory.CreateAltitudeStepBuilder(GetAltitudeStepBuilderParam(seed));
@@ -140,14 +164,14 @@ namespace ArcanumIsland.ConsoleApp
             var altitudeRadialDecreaseStep = stepFactory.CreateAltitudeRadialDecreaseStepBuilder(GetAltitudeRadialDecreaseStepBuilderParam());
 
             var addOceanStep = stepFactory.CreateAddLayerStepBuilder(GetAddOceanLayerStepBuilderParam(waterEdge));
-            
+
             var addSandStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Sand>(waterEdge - sandAltitudeRange, waterEdge + sandAltitudeRange));
             var addGrassStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Grass>(waterEdge + sandAltitudeRange, waterEdge + sandAltitudeRange + grassAltitudeRange));
-            var addSnowStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Snow>(waterEdge + sandAltitudeRange + grassAltitudeRange, waterEdge + sandAltitudeRange + grassAltitudeRange + iceAltitudeRange));
+            var addSnowStep = stepFactory.CreateAddLayerStepBuilder(GetAddLayerStepBuilderParam<Snow>(waterEdge + sandAltitudeRange + grassAltitudeRange, 255));
 
             var altitudeStepResult = director.ApplyStepBuilder(altitudeStep);
 
-            //var altitudeRadialDecreaseStepResult = director.ApplyStepBuilder(altitudeRadialDecreaseStep);
+            var altitudeRadialDecreaseStepResult = director.ApplyStepBuilder(altitudeRadialDecreaseStep);
 
             var addOceanStepResult = director.ApplyStepBuilder(addOceanStep);
 
@@ -181,7 +205,7 @@ namespace ArcanumIsland.ConsoleApp
             //ModelStoringExtensions.SerializeModelToXml(mapStoreModel2, @"D:\ArcanumIsland\Models\test_xml_map2.xml");
         }
 
-        private static AltitudeStepBuilderParam GetAltitudeStepBuilderParam(int seed) 
+        private static AltitudeStepBuilderParam GetAltitudeStepBuilderParam(int seed)
         {
             return new AltitudeStepBuilderParam
             {
@@ -204,7 +228,7 @@ namespace ArcanumIsland.ConsoleApp
             return new AddLayerStepBuilderParam<L>
             {
                 LayerFactory = new LayerFactory<L>(),
-                AddCondition = a => 
+                AddCondition = a =>
                 {
                     var altitude = a.GetLayer<Altitude>();
 
@@ -214,10 +238,73 @@ namespace ArcanumIsland.ConsoleApp
                     {
                         return true;
                     }
-                    else 
+                    else
                     {
                         return false;
-                    }                    
+                    }
+                }
+            };
+        }
+
+        private static AddLayerStepBuilderParam<L> GetTestMapStepBuilderParam<L>(int width, int height) where L : ILayer, new()
+        {
+            return new AddLayerStepBuilderParam<L>
+            {
+                LayerFactory = new LayerFactory<L>(),
+                AddCondition = a =>
+                {
+                    var altitude = a.GetLayer<Altitude>();
+
+                    if (altitude == null) { return false; }
+
+                    altitude.Value = 100.0 + altitude.Value / 10;
+
+                    var result = false;
+
+                    // 
+                    if (a.X < width / 2 && a.Y < height / 2)
+                    {
+                        result = true;
+                    }
+
+                    if (a.X > width / 2 && a.Y > height / 2)
+                    {
+                        result = true;
+                    }
+
+                    //
+                    if (a.X == a.Y)
+                    {
+                        result = false;
+                    }
+
+                    if (width - a.X == a.Y)
+                    {
+                        result = true;
+                    }
+
+                    //
+                    if (width / 2 - a.X == a.Y)
+                    {
+                        result = false;
+                    }
+
+                    if (a.X + width / 2 == a.Y)
+                    {
+                        result = true;
+                    }
+
+                    if (a.X == a.Y + width / 2)
+                    {
+                        result = true;
+                    }
+
+                    if (width - a.X == a.Y - width / 2)
+                    {
+                        result = false;
+                    }
+
+                    return result;
                 }
             };
         }
